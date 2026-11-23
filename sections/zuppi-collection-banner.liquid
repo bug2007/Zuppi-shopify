@@ -1,0 +1,156 @@
+{% comment %}
+  Section contract. Presents the current collection and its related destinations from the selected menu.
+{% endcomment %}
+
+{% liquid
+  assign collection_menu = section.settings.menu | default: linklists['main-menu']
+  assign parent_link = nil
+  assign category_link = nil
+  for item in collection_menu.links
+    if item.type == 'collection_link' and item.object.handle == collection.handle
+      assign category_link = item
+      break
+    endif
+    for child in item.links
+      if child.type == 'collection_link' and child.object.handle == collection.handle
+        assign parent_link = item
+        assign category_link = item
+        break
+      endif
+    endfor
+    if category_link
+      break
+    endif
+  endfor
+%}
+
+<div class="zuppi-collection-banner" style="--zuppi-banner-color: {{ section.settings.background_color }}; --zuppi-banner-text: {{ section.settings.text_color }};">
+  <div class="zuppi-collection-banner__content">
+    <div class="zuppi-collection-banner__trail">
+      <a href="{{ routes.root_url }}">{{ 'accessibility.link_to_home' | t }}</a>
+      <span aria-hidden="true">/</span>
+      {% if parent_link %}
+        <a href="{{ parent_link.url }}">{{ parent_link.title | escape }}</a>
+        <span aria-hidden="true">/</span>
+      {% endif %}
+      <span aria-current="page">{{ collection.title | escape }}</span>
+    </div>
+    <h1>{{ collection.title | escape }}</h1>
+    {% if section.settings.show_description and collection.description != blank %}
+      <div class="zuppi-collection-banner__description rte">{{ collection.description }}</div>
+    {% elsif section.settings.show_description and collection.handle == 'dogs' and section.settings.dogs_description != blank %}
+      <div class="zuppi-collection-banner__description rte">{{ section.settings.dogs_description }}</div>
+    {% endif %}
+    {% if category_link.links.size > 0 %}
+      <ul class="zuppi-collection-banner__links list-unstyled">
+        {% for link in category_link.links %}
+          <li><a href="{{ link.url }}"{% if link.current %} aria-current="page"{% endif %}>{{ link.title | escape }}</a></li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </div>
+  <div class="zuppi-collection-banner__mark" aria-hidden="true">
+    <span></span><span></span><span></span><span></span><span></span>
+  </div>
+</div>
+
+{% stylesheet %}
+  .zuppi-collection-banner {
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    align-items: center;
+    min-block-size: clamp(17rem, 24vw, 26rem);
+    margin-bottom: 1rem;
+    inline-size: 100%;
+    overflow: hidden;
+    color: var(--zuppi-banner-text);
+    background: var(--zuppi-banner-color);
+  }
+
+  .zuppi-collection-banner::after {
+    position: absolute;
+    z-index: -1;
+    inset-block-end: -42%;
+    inset-inline-end: -8%;
+    inline-size: clamp(11rem, 24vw, 24rem);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: #1e1b4b38;
+    content: '';
+    pointer-events: none;
+  }
+
+  .zuppi-collection-banner__content { min-inline-size: 0; padding: clamp(1.35rem, 4vw, 4rem); }
+  .zuppi-collection-banner__trail { display: flex; align-items: center; gap: .4rem; font-size: .82rem; margin-block-end: .9rem; }
+  .zuppi-collection-banner__trail a { color: inherit; text-decoration: underline; text-underline-offset: .18em; }
+  .zuppi-collection-banner h1 {
+    color: inherit;
+    margin: 0;
+    font-size: clamp(2.75rem, 8vw, 7rem);
+    font-weight: 800;
+    letter-spacing: -.06em;
+    line-height: 1;
+    overflow-wrap: anywhere;
+  }
+
+  .zuppi-collection-banner__description { margin-block: .8rem 0; max-inline-size: 47ch; }
+  .zuppi-collection-banner__description :is(p, a) { color: inherit; }
+  .zuppi-collection-banner__links { display: flex; flex-wrap: wrap; gap: .5rem; margin: 1.05rem 0 0; padding: 0; }
+  .zuppi-collection-banner__links a {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: 2.75rem;
+    padding: .45rem .95rem;
+    border: 1px solid #fff8f0;
+    border-radius: 50rem;
+    background: #fff8f0;
+    color: #1e1b4b;
+    font-size: .875rem;
+    font-weight: 650;
+    text-decoration: none;
+  }
+
+  .zuppi-collection-banner__links a:is(:hover, :focus-visible, [aria-current='page']) { background: #e7dbff; }
+  .zuppi-collection-banner__mark {
+    position: relative;
+    flex: 0 0 auto;
+    inline-size: clamp(9rem, 18vw, 16rem);
+    aspect-ratio: 1;
+    margin-inline: auto clamp(1.3rem, 5vw, 5rem);
+    border-radius: 50%;
+    background: #ffffff30;
+  }
+
+  .zuppi-collection-banner__mark span { position: absolute; border-radius: 50%; background: #fff8f0; }
+  .zuppi-collection-banner__mark span:nth-child(1) { inset: 32% auto auto 18%; inline-size: 14%; block-size: 21%; transform: rotate(-25deg); }
+  .zuppi-collection-banner__mark span:nth-child(2) { inset: 15% auto auto 35%; inline-size: 15%; block-size: 24%; transform: rotate(-8deg); }
+  .zuppi-collection-banner__mark span:nth-child(3) { inset: 15% 30% auto auto; inline-size: 15%; block-size: 24%; transform: rotate(10deg); }
+  .zuppi-collection-banner__mark span:nth-child(4) { inset: 32% 14% auto auto; inline-size: 14%; block-size: 21%; transform: rotate(24deg); }
+  .zuppi-collection-banner__mark span:nth-child(5) {
+    inset: auto 24% 17%;
+    block-size: 33%;
+    border-radius: 50% 50% 40% 40% / 75% 75% 25% 25%;
+    background: #f0502d;
+  }
+
+  @media (max-width: 699px) {
+    .zuppi-collection-banner { align-items: flex-start; }
+    .zuppi-collection-banner__mark { display: none; }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.collection_title",
+  "enabled_on": { "templates": ["collection"] },
+  "settings": [
+    { "type": "link_list", "id": "menu", "label": "t:settings.menu", "default": "main-menu" },
+    { "type": "color", "id": "background_color", "label": "t:settings.background_color", "default": "#4F46E5" },
+    { "type": "color", "id": "text_color", "label": "t:settings.text_color", "default": "#FFF8F0" },
+    { "type": "checkbox", "id": "show_description", "label": "t:names.description", "default": true },
+    { "type": "richtext", "id": "dogs_description", "label": "t:settings.text" }
+  ],
+  "presets": [{ "name": "t:names.collection_title" }]
+}
+{% endschema %}

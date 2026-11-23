@@ -91,6 +91,21 @@
   </results-list>
 </collection-component>
 
+{% stylesheet %}
+  collection-component .facets--horizontal .facets__summary {
+    min-block-size: 2.5rem;
+    border: 1px solid rgb(var(--color-foreground-rgb) / .12);
+    border-radius: 50rem;
+    padding-inline: .8rem;
+  }
+
+  @media (min-width: 1100px) {
+    collection-component .product-grid.product-grid--grid[data-product-card-size='small'][product-grid-view='default'] {
+      --product-grid-columns-desktop: repeat(5, minmax(0, 1fr));
+    }
+  }
+{% endstylesheet %}
+
 {% schema %}
 {
   "name": "t:names.collection_container",

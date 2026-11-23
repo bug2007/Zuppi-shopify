@@ -951,6 +951,20 @@
   .menu-list__list-item:not(:has([aria-expanded='true'])) > .menu-list__submenu product-component {
     display: none;
   }
+  /* Zuppi storefront styling. */
+  .header__row--top .menu-list__link {
+    border-radius: 3rem;
+    font-weight: 650;
+  }
+
+  .header__row--top .menu-list__link-title {
+    border-radius: 3rem;
+    padding: .45rem .75rem;
+  }
+
+  .header__row--top .menu-list__link:is(:hover, :focus-visible, [aria-expanded='true']) .menu-list__link-title {
+    background: rgb(var(--color-foreground-rgb) / .09);
+  }
 {% endstylesheet %}
 
 {% schema %}

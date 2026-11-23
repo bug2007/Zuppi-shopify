@@ -15,6 +15,7 @@
   class="
     section
     section--{{ section.settings.section_width }}
+    {% if request.page_type == 'index' and section.settings.section_width == 'full-width' and section.settings.layout_type == 'carousel' %}section--full-width-margin{% endif %}
     {% if section.settings.background_color != blank %}color-custom-{{ section.id }}{% endif %}
     section-resource-list
     spacing-style

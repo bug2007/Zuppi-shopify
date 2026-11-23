@@ -126,6 +126,18 @@
     position: absolute;
     inset: 0;
   }
+  /* Zuppi storefront styling. */
+  .announcement-bar__text {
+    color: var(--color-foreground);
+    font-weight: 650;
+    letter-spacing: .025em;
+    line-height: 1.35;
+  }
+
+  .announcement-bar__slide:is(:hover, :focus-within):has(.announcement-bar__link) .announcement-bar__text {
+    text-decoration: underline;
+    text-underline-offset: .18em;
+  }
 {% endstylesheet %}
 
 {% schema %}

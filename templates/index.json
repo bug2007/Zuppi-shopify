@@ -6,89 +6,89 @@
  * or related systems. Please exercise caution as any changes
  * made to this file may be overwritten.
  * ------------------------------------------------------------
- */{
+ */
+{
   "sections": {
     "hero_jVaWmY": {
-      "type": "hero",
+      "type": "zuppi-home-feature",
+      "settings": {
+        "presentation": "hero",
+        "heading": "Good days have paws.",
+        "description": "<p>Food, play and everyday essentials for the pets who make your day.</p>",
+        "label": "Shop pet essentials",
+        "link": ""
+      }
+    },
+    "zuppi_categories": {
+      "type": "zuppi-home-feature",
       "blocks": {
-        "text_YLPk4p": {
-          "type": "text",
-          "name": "t:names.heading",
+        "pet_1": {
+          "type": "category",
           "settings": {
-            "text": "<p>Browse our latest products</p>",
-            "text_color": "{{ settings.color_palette.background }}",
-            "width": "fit-content",
-            "max_width": "normal",
-            "alignment": "left",
-            "type_preset": "h2",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
+            "collection": "dogs",
+            "title": "Dogs"
+          }
         },
-        "button_H9gpTf": {
-          "type": "button",
-          "name": "t:names.button",
+        "pet_2": {
+          "type": "category",
           "settings": {
-            "label": "Shop all",
-            "link": "shopify://collections/all",
-            "open_in_new_tab": false,
-            "style_class": "button-custom",
-            "custom_button_background": "rgba(0,0,0,0)",
-            "custom_button_text": "{{ settings.color_palette.background }}",
-            "custom_button_border": "{{ settings.color_palette.background }}",
-            "width": "fit-content",
-            "custom_width": 100,
-            "width_mobile": "fit-content",
-            "custom_width_mobile": 100
-          },
-          "blocks": {}
+            "collection": "cats",
+            "title": "Cats"
+          }
+        },
+        "pet_3": {
+          "type": "category",
+          "settings": {
+            "collection": "fish",
+            "title": "Fish"
+          }
+        },
+        "pet_4": {
+          "type": "category",
+          "settings": {
+            "collection": "birds",
+            "title": "Birds"
+          }
+        },
+        "pet_5": {
+          "type": "category",
+          "settings": {
+            "collection": "small-pets",
+            "title": "Small Pets"
+          }
+        },
+        "pet_6": {
+          "type": "category",
+          "settings": {
+            "collection": "reptiles",
+            "title": "Reptiles"
+          }
         }
       },
       "block_order": [
-        "text_YLPk4p",
-        "button_H9gpTf"
+        "pet_1",
+        "pet_2",
+        "pet_3",
+        "pet_4",
+        "pet_5",
+        "pet_6"
       ],
-      "name": "t:names.hero",
       "settings": {
-        "media_type_1": "image",
-        "media_type_2": "image",
-        "stack_media_on_mobile": false,
-        "custom_mobile_media": false,
-        "media_type_1_mobile": "image",
-        "media_type_2_mobile": "image",
-        "open_in_new_tab": false,
-        "content_direction": "column",
-        "vertical_on_mobile": true,
-        "horizontal_alignment": "space-between",
-        "vertical_alignment": "flex-end",
-        "align_baseline": true,
-        "horizontal_alignment_flex_direction_column": "center",
-        "vertical_alignment_flex_direction_column": "flex-end",
-        "gap": 24,
-        "section_width": "page-width",
-        "section_height": "medium",
-        "section_height_custom": 50,
-        "background_color": "rgba(0,0,0,0)",
-        "toggle_overlay": true,
-        "overlay_color": "#12121266",
-        "overlay_style": "solid",
-        "gradient_direction": "to bottom",
-        "blurred_reflection": false,
-        "reflection_opacity": 75,
-        "padding-block-start": 100,
-        "padding-block-end": 72
+        "presentation": "categories",
+        "heading": "Shop by pet",
+        "description": "",
+        "label": "",
+        "link": ""
+      }
+    },
+    "zuppi_promotion": {
+      "type": "zuppi-home-feature",
+      "settings": {
+        "presentation": "promotion",
+        "heading": "Little things. Big tail wags.",
+        "description": "<p>Find a new favorite for mealtime, playtime and the moments in between.</p>",
+        "label": "Explore the shop",
+        "link": ""
       }
     },
     "product_list_fa6P9H": {
@@ -114,11 +114,13 @@
             "height": "fit",
             "custom_height": 100,
             "background_media": "none",
+            "background_color": "",
             "video_position": "cover",
             "background_image_position": "cover",
             "border": "none",
             "border_width": 1,
             "border_opacity": 100,
+            "border_color": "",
             "border_radius": 0,
             "padding-block-start": 0,
             "padding-block-end": 0,
@@ -130,16 +132,18 @@
               "type": "_product-list-text",
               "name": "t:names.collection_title",
               "settings": {
-                "text": "<h3>{{ closest.collection.title }}</h3>",
+                "text": "<h2>Find their next favorite</h2>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
-                "type_preset": "h4",
+                "type_preset": "h2",
                 "font": "var(--font-body--family)",
+                "font_size": "1rem",
                 "line_height": "normal",
                 "letter_spacing": "normal",
                 "case": "none",
                 "wrap": "pretty",
+                "text_color": "",
                 "background": false,
                 "background_color": "#00000026",
                 "corner_radius": 0,
@@ -154,9 +158,13 @@
               "type": "_product-list-button",
               "name": "t:names.product_list_button",
               "settings": {
-                "label": "View all",
+                "label": "Shop all products",
                 "open_in_new_tab": false,
                 "style_class": "link",
+                "custom_button_background": "{{ settings.color_palette.foreground }}",
+                "custom_button_text": "{{ settings.color_palette.background }}",
+                "custom_button_border": "{{ settings.color_palette.background }}",
+                "link_text_color": "",
                 "width": "fit-content",
                 "custom_width": 100,
                 "width_mobile": "fit-content",
@@ -176,9 +184,11 @@
           "static": true,
           "settings": {
             "product_card_gap": 4,
+            "background_color": "",
             "border": "none",
             "border_width": 1,
             "border_opacity": 100,
+            "border_color": "",
             "border_radius": 0,
             "padding-block-start": 0,
             "padding-block-end": 0,
@@ -190,11 +200,12 @@
               "type": "_product-card-gallery",
               "name": "t:names.product_card_media",
               "settings": {
-                "image_ratio": "adapt",
+                "image_ratio": "square",
                 "border": "none",
                 "border_width": 1,
                 "border_opacity": 100,
-                "border_radius": 0,
+                "border_color": "",
+                "border_radius": 16,
                 "padding-block-start": 0,
                 "padding-block-end": 0,
                 "padding-inline-start": 0,
@@ -216,6 +227,7 @@
                 "letter_spacing": "normal",
                 "case": "none",
                 "wrap": "pretty",
+                "text_color": "",
                 "background": false,
                 "background_color": "#00000026",
                 "corner_radius": 0,
@@ -241,6 +253,7 @@
                 "line_height": "normal",
                 "letter_spacing": "normal",
                 "case": "none",
+                "text_color": "",
                 "padding-block-start": 0,
                 "padding-block-end": 0,
                 "padding-inline-start": 0,
@@ -259,27 +272,43 @@
       "name": "t:names.product_list",
       "settings": {
         "collection": "all",
-        "layout_type": "grid",
+        "layout_type": "carousel",
         "carousel_on_mobile": false,
         "max_products": 8,
-        "columns": 4,
+        "columns": 5,
         "mobile_columns": "2",
         "mobile_card_size": "60cqw",
-        "columns_gap": 8,
+        "columns_gap": 18,
         "rows_gap": 24,
         "icons_style": "arrow",
-        "icons_shape": "none",
-        "section_width": "page-width",
+        "icons_shape": "circle",
+        "section_width": "full-width",
         "horizontal_alignment": "flex-start",
-        "gap": 28,
-        "background_color": "{{ settings.color_palette.background }}",
-        "padding-block-start": 48,
-        "padding-block-end": 48
+        "gap": 24,
+        "background_color": "#faf5ef",
+        "padding-block-start": 44,
+        "padding-block-end": 64
+      }
+    },
+    "zuppi_featured_picks": {
+      "type": "zuppi-featured-picks",
+      "settings": {
+        "heading": "The Zuppi edit",
+        "products": [
+          "zuppi-meadow-bowl-chicken-oat",
+          "zuppi-dawn-whisker-salmon",
+          "zuppi-hearth-bowl-beef-stew",
+          "zuppi-pine-whisker-turkey"
+        ],
+        "link_label": "Shop all products"
       }
     }
   },
   "order": [
     "hero_jVaWmY",
+    "zuppi_categories",
+    "zuppi_promotion",
+    "zuppi_featured_picks",
     "product_list_fa6P9H"
   ]
 }
