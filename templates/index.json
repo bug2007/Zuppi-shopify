@@ -103,16 +103,40 @@
         "link": ""
       }
     },
+    "zuppi_featured_grid": {
+      "type": "zuppi-featured-picks",
+      "settings": {
+        "heading": "Featured Products",
+        "products": [
+          "zuppi-blue-rill-cichlid-granules",
+          "zuppi-bramblefield-dragon-greens",
+          "zuppi-bright-perch-budgie-seed",
+          "zuppi-burrowcraft-chinchilla-pellets",
+          "zuppi-cedar-trail-meadow-blend",
+          "zuppi-coral-atlas-marine-flakes",
+          "zuppi-daybreak-studio-canary-seed",
+          "zuppi-dunestone-dried-crickets"
+        ],
+        "static_grid": true,
+        "link_label": "",
+        "link": ""
+      }
+    },
     "zuppi_featured_picks": {
       "type": "zuppi-featured-picks",
       "settings": {
         "heading": "The Zuppi edit",
         "products": [
-          "zuppi-meadow-bowl-chicken-oat",
-          "zuppi-dawn-whisker-salmon",
-          "zuppi-hearth-bowl-beef-stew",
-          "zuppi-pine-whisker-turkey"
+          "zuppi-cedar-trail-moss-rope-ball",
+          "zuppi-cedar-trail-sand-travel-kennel",
+          "zuppi-cedar-trail-willow-bolster-bed",
+          "zuppi-garden-ramble-lilac-cave-bed",
+          "zuppi-harborbound-atlantic-rope-lead",
+          "zuppi-harborbound-cove-folding-pet-crate",
+          "zuppi-hearthmark-brick-bounce-bone",
+          "zuppi-meadowline-sunburst-fetch-ball"
         ],
+        "static_grid": false,
         "link_label": "Shop all products",
         "link": ""
       }
@@ -404,24 +428,6 @@
       ],
       "settings": {
         "heading": "Shop by brand"
-      }
-    },
-    "zuppi_featured_grid": {
-      "type": "zuppi-featured-picks",
-      "settings": {
-        "heading": "Featured Products",
-        "products": [
-          "zuppi-garden-bowl-lamb-rice",
-          "zuppi-tide-whisker-tuna",
-          "zuppi-harbor-bowl-salmon-sweet-potato",
-          "zuppi-velvet-whisker-duck",
-          "zuppi-orchard-bowl-turkey-apple",
-          "zuppi-willow-whisker-chicken",
-          "zuppi-hearth-bowl-beef-stew",
-          "zuppi-pine-whisker-turkey"
-        ],
-        "static_grid": true,
-        "link_label": ""
       }
     }
   },
