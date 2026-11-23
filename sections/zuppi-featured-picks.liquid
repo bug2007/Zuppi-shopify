@@ -2,9 +2,15 @@
   Section contract. Shows a merchant-selected set of products in a compact homepage grid.
 {% endcomment %}
 
-{% assign featured_products = section.settings.products %}
+{% liquid
+  assign featured_products = section.settings.products
+  assign product_limit = 4
+  if section.settings.static_grid
+    assign product_limit = 8
+  endif
+%}
 {% if featured_products != blank %}
-  <div class="zuppi-picks{% if featured_products.count > 1 %} zuppi-picks--loop{% endif %}" style="--pick-columns: {{ featured_products.count | at_most: 4 }};">
+  <div class="zuppi-picks{% if section.settings.static_grid %} zuppi-picks--static{% elsif featured_products.count > 1 %} zuppi-picks--loop{% endif %}" style="--pick-columns: {{ featured_products.count | at_most: 4 }};">
     <div class="zuppi-picks__header">
       {% if section.settings.heading != blank %}<h2>{{ section.settings.heading | escape }}</h2>{% endif %}
       {% if section.settings.link_label != blank %}
@@ -15,7 +21,7 @@
     </div>
     {% capture cards %}
     <ul class="zuppi-picks__grid list-unstyled">
-      {% for product in featured_products limit: 4 %}
+      {% for product in featured_products limit: product_limit %}
         <li class="zuppi-picks__item">
           <a href="{{ product.url }}" class="zuppi-picks__card">
             <div class="zuppi-picks__image">
@@ -30,23 +36,17 @@
                 <h3>{{ product.title | escape }}</h3>
                 {% render 'price', product_resource: product, show_sale_price_first: true %}
               </div>
-              <span class="zuppi-picks__arrow" aria-hidden="true">↗</span>
+              {% unless section.settings.static_grid %}<span class="zuppi-picks__arrow" aria-hidden="true">↗</span>{% endunless %}
             </div>
           </a>
         </li>
       {% endfor %}
     </ul>
     {% endcapture %}
-    {% if featured_products.count > 1 %}
-      <div class="zuppi-picks__control">
-        <input type="checkbox" id="ZuppiPicksPause-{{ section.id }}">
-        <label for="ZuppiPicksPause-{{ section.id }}">{{ 'accessibility.slideshow_pause' | t }}</label>
-      </div>
-    {% endif %}
     <div class="zuppi-picks__viewport">
       <div class="zuppi-picks__track">
         {{ cards }}
-        {% if featured_products.count > 1 %}
+        {% if featured_products.count > 1 and section.settings.static_grid == false %}
           <div class="zuppi-picks__copy" aria-hidden="true">
             {{ cards | replace: 'class="zuppi-picks__card"', 'class="zuppi-picks__card" tabindex="-1"' }}
           </div>
@@ -68,9 +68,16 @@
 
   .zuppi-picks__header { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: .6rem 1rem; margin-block-end: 1.5rem; }
   .zuppi-picks__header h2 { margin: 0; font-size: clamp(2rem, 4vw, 3.8rem); line-height: 1; letter-spacing: -.04em; color: inherit; }
+  .zuppi-picks--static .zuppi-picks__header { justify-content: center; text-align: center; }
+  .zuppi-picks--static { background: #fff8f0; }
+  .zuppi-picks--static .zuppi-picks__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-inline-size: 86rem;
+    margin-inline: auto;
+  }
   .zuppi-picks__view-all { color: inherit; font-weight: 650; text-underline-offset: .22em; }
   .zuppi-picks__grid { display: grid; grid-template-columns: repeat(var(--pick-columns), minmax(0, 1fr)); gap: var(--zuppi-picks-gap); margin: 0; padding: 0; }
-  .zuppi-picks__copy, .zuppi-picks__control { display: none; }
+  .zuppi-picks__copy { display: none; }
   .zuppi-picks__viewport { container-type: inline-size; }
   .zuppi-picks__card { display: block; height: 100%; overflow: hidden; border-radius: 1.2rem; background: #fffaf4; color: inherit; text-decoration: none; }
   .zuppi-picks__card:focus-visible { outline: 2px solid var(--zuppi-picks-accent); outline-offset: 3px; }
@@ -81,6 +88,7 @@
   .zuppi-picks__arrow { display: grid; flex: 0 0 1.8rem; aspect-ratio: 1; place-items: center; border-radius: 50%; color: var(--zuppi-picks-accent); background: #ebe6ff; }
   .zuppi-picks__card:hover .zuppi-picks__arrow { color: #fff; background: var(--zuppi-picks-accent); }
 
+  @media (min-width: 750px) { .zuppi-picks--static .zuppi-picks__grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
   @media (max-width: 749px) { .zuppi-picks__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 
   @media (prefers-reduced-motion: no-preference) {
@@ -89,9 +97,6 @@
     .zuppi-picks__card:is(:hover, :focus-visible) .zuppi-picks__arrow { transform: translate(2px, -2px); }
 
     @supports (width: 1cqw) {
-      .zuppi-picks--loop .zuppi-picks__control { display: flex; align-items: center; gap: .4rem; margin-block-end: .85rem; }
-      .zuppi-picks--loop .zuppi-picks__control input { accent-color: var(--zuppi-picks-accent); }
-      .zuppi-picks--loop .zuppi-picks__control label { font-size: .85rem; cursor: pointer; }
       .zuppi-picks--loop .zuppi-picks__viewport { overflow: clip; }
       .zuppi-picks--loop .zuppi-picks__track { display: flex; width: max-content; animation: zuppi-picks-loop 28s linear infinite; }
       .zuppi-picks--loop .zuppi-picks__copy { display: block; }
@@ -103,7 +108,6 @@
         flex: 0 0 auto;
         width: calc((100cqw - (var(--pick-columns) - 1) * var(--zuppi-picks-gap)) / var(--pick-columns));
       }
-      .zuppi-picks--loop:has(.zuppi-picks__control input:checked) .zuppi-picks__track,
       .zuppi-picks--loop .zuppi-picks__viewport:hover .zuppi-picks__track { animation-play-state: paused; }
       .zuppi-picks--loop .zuppi-picks__viewport:has(.zuppi-picks__card:focus-visible) .zuppi-picks__track {
         animation: none;
@@ -132,7 +136,8 @@
   "enabled_on": { "templates": ["index"] },
   "settings": [
     { "type": "text", "id": "heading", "label": "t:settings.heading", "default": "The Zuppi edit" },
-    { "type": "product_list", "id": "products", "label": "t:settings.products", "limit": 4 },
+    { "type": "product_list", "id": "products", "label": "t:settings.products", "limit": 8 },
+    { "type": "checkbox", "id": "static_grid", "label": "t:options.grid", "default": false },
     { "type": "text", "id": "link_label", "label": "t:settings.label", "default": "Shop all products" },
     { "type": "url", "id": "link", "label": "t:settings.link" }
   ],

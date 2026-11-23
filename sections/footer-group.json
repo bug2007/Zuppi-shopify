@@ -141,7 +141,8 @@
         "background_color": "{{ settings.color_palette.background }}",
         "padding-block-start": 30,
         "padding-block-end": 30
-      }
+      },
+      "disabled": true
     },
     "footer_utilities_jLGE8U": {
       "type": "footer-utilities",
@@ -189,10 +190,16 @@
         "background_color": "{{ settings.color_palette.background }}",
         "padding-block-start": 20,
         "padding-block-end": 48
-      }
+      },
+      "disabled": true
+    },
+    "zuppi_footer": {
+      "type": "zuppi-footer",
+      "settings": {}
     }
   },
   "order": [
+    "zuppi_footer",
     "footer_m9NzUG",
     "footer_utilities_jLGE8U"
   ]

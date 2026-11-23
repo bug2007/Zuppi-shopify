@@ -1,0 +1,163 @@
+{% comment %}
+  Section contract. Full-width footer with Shopify navigation, policies, and newsletter signup.
+{% endcomment %}
+
+{% liquid
+  assign options = section.settings
+  assign shop_links = options.shop_menu.links
+  if shop_links == blank
+    for item in linklists['main-menu'].links
+      if item.object.handle == 'dogs'
+        assign shop_links = item.links
+        break
+      endif
+    endfor
+  endif
+  assign care_menu = options.care_menu | default: linklists['footer']
+  assign signup_id = 'ZuppiFooterSignup-' | append: section.id
+%}
+
+<div class="zuppi-footer" style="--zuppi-footer-bg: {{ options.background_color }}; --zuppi-footer-fg: {{ options.text_color }};">
+  <div class="zuppi-footer__columns">
+    <div class="zuppi-footer__column">
+      <h2>{{ options.brand_heading | escape }}</h2>
+      {{ options.brand_text }}
+      {% if options.instagram != blank or options.facebook != blank %}
+        <ul class="zuppi-footer__links list-unstyled">
+          {% if options.instagram != blank %}<li><a href="{{ options.instagram }}">Instagram</a></li>{% endif %}
+          {% if options.facebook != blank %}<li><a href="{{ options.facebook }}">Facebook</a></li>{% endif %}
+        </ul>
+      {% endif %}
+    </div>
+
+    {% if shop_links != blank %}
+      <div class="zuppi-footer__column">
+        <h2>{{ options.shop_heading | escape }}</h2>
+        <ul class="zuppi-footer__links list-unstyled">
+          {% for link in shop_links %}<li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>{% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+
+    <div class="zuppi-footer__column">
+      <h2>{{ options.care_heading | escape }}</h2>
+      <ul class="zuppi-footer__links list-unstyled">
+        {% if options.care_menu == blank and pages.contact != blank %}<li><a href="{{ pages.contact.url }}">{{ pages.contact.title | escape }}</a></li>{% endif %}
+        {% for link in care_menu.links %}<li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>{% endfor %}
+        {% for policy in shop.policies %}
+          {% if policy.body != blank %}<li><a href="{{ policy.url }}">{{ policy.title | escape }}</a></li>{% endif %}
+        {% endfor %}
+      </ul>
+    </div>
+
+    <div class="zuppi-footer__column">
+      <h2>{{ options.signup_heading | escape }}</h2>
+      {{ options.signup_text }}
+      {% form 'customer', id: signup_id, class: 'zuppi-footer__form' %}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        <label class="visually-hidden" for="{{ signup_id }}-name">{{ 'blocks.contact_form.name' | t }}</label>
+        <input id="{{ signup_id }}-name" type="text" name="contact[first_name]" autocomplete="given-name" placeholder="{{ 'blocks.contact_form.name' | t | escape }}">
+        <label class="visually-hidden" for="{{ signup_id }}-email">{{ 'blocks.email_signup.label' | t }}</label>
+        <input id="{{ signup_id }}-email" type="email" name="contact[email]" autocomplete="email" value="{{ form.email | escape }}" placeholder="{{ 'blocks.email_signup.label' | t | escape }}" required>
+        <button type="submit">{{ options.signup_button | escape }}</button>
+        {% if form.posted_successfully? %}<p role="status">{{ 'blocks.email_signup.success' | t }}</p>{% endif %}
+        {% if form.errors %}<div role="alert">{{ form.errors | default_errors }}</div>{% endif %}
+      {% endform %}
+    </div>
+  </div>
+
+  <a class="zuppi-footer__wordmark" href="{{ routes.root_url }}" aria-label="{{ 'accessibility.home_logo_alt' | t: store_name: shop.name | escape }}">
+    <span aria-hidden="true">Zupp<span class="zuppi-footer__accent">i</span></span>
+  </a>
+
+  <div class="zuppi-footer__bottom">
+    <small>© {{ 'now' | date: '%Y' }} {{ shop.name | escape }}</small>
+  </div>
+</div>
+
+{% stylesheet %}
+  .zuppi-footer {
+    --zuppi-footer-gutter: clamp(1.25rem, 4vw, 5rem);
+    inline-size: 100%;
+    padding: clamp(2rem, 5vw, 5rem) var(--zuppi-footer-gutter) 1rem;
+    background: var(--zuppi-footer-bg);
+    color: var(--zuppi-footer-fg);
+    overflow: hidden;
+  }
+
+  .zuppi-footer__columns { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(1.4rem, 4vw, 5rem); }
+  .zuppi-footer__column { min-inline-size: 0; }
+  .zuppi-footer__column h2 { font-size: .76rem; font-weight: 750; text-transform: uppercase; letter-spacing: .055em; color: inherit; margin: 0 0 1rem; }
+  .zuppi-footer__column p { color: inherit; font-size: .9rem; line-height: 1.55; margin: 0 0 .8rem; max-inline-size: 29ch; }
+  .zuppi-footer__links { display: grid; gap: .45rem; margin: 0; padding: 0; font-size: .88rem; }
+  .zuppi-footer a { color: inherit; text-decoration: none; }
+  .zuppi-footer__links a:hover { text-decoration: underline; text-underline-offset: .2em; }
+  .zuppi-footer__form { display: grid; gap: .5rem; }
+  .zuppi-footer__form input:not([type='hidden']) {
+    min-inline-size: 0;
+    inline-size: 100%;
+    min-block-size: 2.75rem;
+    padding: .5rem 0;
+    border: 0;
+    border-block-end: 1px solid #fdf6ee70;
+    border-radius: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    font-size: .9rem;
+  }
+
+  .zuppi-footer__form input::placeholder { color: #fdf6eec7; }
+  .zuppi-footer__form button {
+    min-block-size: 2.75rem;
+    padding: .4rem 1rem;
+    border: 1px solid #fdf6ee8c;
+    border-radius: 99px;
+    background: transparent;
+    color: inherit;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    font-size: .75rem;
+    font-weight: 750;
+    cursor: pointer;
+  }
+
+  .zuppi-footer__form button:hover { background: var(--zuppi-footer-fg); color: var(--zuppi-footer-bg); }
+  .zuppi-footer :is(a, button, input):focus-visible { outline: 2px solid #ff815f; outline-offset: 3px; }
+  .zuppi-footer__wordmark {
+    display: block;
+    inline-size: fit-content;
+    margin: clamp(2.5rem, 7vw, 8rem) auto .05em;
+    font: 900 clamp(4rem, 27vw, 25rem)/.92 var(--font-heading--family);
+    letter-spacing: -.095em;
+    padding-inline-end: .06em;
+  }
+
+  .zuppi-footer__accent { color: #ff815f; }
+  .zuppi-footer__bottom { padding-block-start: .75rem; border-block-start: 1px solid #fdf6ee2b; font-size: .75rem; }
+  @media (max-width: 850px) { .zuppi-footer__columns { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 370px) { .zuppi-footer__columns { grid-template-columns: minmax(0, 1fr); } }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.footer",
+  "enabled_on": { "groups": ["footer"] },
+  "settings": [
+    { "type": "color", "id": "background_color", "label": "t:settings.background_color", "default": "#1E1B4B" },
+    { "type": "color", "id": "text_color", "label": "t:settings.text_color", "default": "#FFF8F0" },
+    { "type": "text", "id": "brand_heading", "label": "t:settings.heading", "default": "About the brand" },
+    { "type": "richtext", "id": "brand_text", "label": "t:settings.text", "default": "<p>Food, treats and everyday essentials for the pets who make your day.</p>" },
+    { "type": "url", "id": "instagram", "label": "Instagram" },
+    { "type": "url", "id": "facebook", "label": "Facebook" },
+    { "type": "text", "id": "shop_heading", "label": "t:settings.heading", "default": "Shop dogs" },
+    { "type": "link_list", "id": "shop_menu", "label": "t:settings.menu" },
+    { "type": "text", "id": "care_heading", "label": "t:settings.heading", "default": "Customer care" },
+    { "type": "link_list", "id": "care_menu", "label": "t:settings.menu" },
+    { "type": "text", "id": "signup_heading", "label": "t:settings.heading", "default": "Stay in touch" },
+    { "type": "richtext", "id": "signup_text", "label": "t:settings.text", "default": "<p>Sign up for new arrivals, offers and tips for happy pets.</p>" },
+    { "type": "text", "id": "signup_button", "label": "t:settings.label", "default": "Join" }
+  ],
+  "presets": [{ "name": "t:names.footer" }]
+}
+{% endschema %}

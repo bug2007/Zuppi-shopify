@@ -26,42 +26,54 @@
           "type": "category",
           "settings": {
             "collection": "dogs",
-            "title": "Dogs"
+            "title": "Dogs",
+            "description": "Food, toys and everyday gear.",
+            "image": "{{ block.settings.collection.image }}"
           }
         },
         "pet_2": {
           "type": "category",
           "settings": {
             "collection": "cats",
-            "title": "Cats"
+            "title": "Cats",
+            "description": "From mealtime to playtime.",
+            "image": "{{ block.settings.collection.image }}"
           }
         },
         "pet_3": {
           "type": "category",
           "settings": {
             "collection": "fish",
-            "title": "Fish"
+            "title": "Fish",
+            "description": "Food and aquarium essentials.",
+            "image": "{{ block.settings.collection.image }}"
           }
         },
         "pet_4": {
           "type": "category",
           "settings": {
             "collection": "birds",
-            "title": "Birds"
+            "title": "Birds",
+            "description": "Food, perches and play.",
+            "image": "{{ block.settings.collection.image }}"
           }
         },
         "pet_5": {
           "type": "category",
           "settings": {
             "collection": "small-pets",
-            "title": "Small Pets"
+            "title": "Small Pets",
+            "description": "Food, bedding and habitats.",
+            "image": "{{ block.settings.collection.image }}"
           }
         },
         "pet_6": {
           "type": "category",
           "settings": {
             "collection": "reptiles",
-            "title": "Reptiles"
+            "title": "Reptiles",
+            "description": "Food, lighting and habitats.",
+            "image": "{{ block.settings.collection.image }}"
           }
         }
       },
@@ -88,6 +100,20 @@
         "heading": "Little things. Big tail wags.",
         "description": "<p>Find a new favorite for mealtime, playtime and the moments in between.</p>",
         "label": "Explore the shop",
+        "link": ""
+      }
+    },
+    "zuppi_featured_picks": {
+      "type": "zuppi-featured-picks",
+      "settings": {
+        "heading": "The Zuppi edit",
+        "products": [
+          "zuppi-meadow-bowl-chicken-oat",
+          "zuppi-dawn-whisker-salmon",
+          "zuppi-hearth-bowl-beef-stew",
+          "zuppi-pine-whisker-turkey"
+        ],
+        "link_label": "Shop all products",
         "link": ""
       }
     },
@@ -290,17 +316,112 @@
         "padding-block-end": 64
       }
     },
-    "zuppi_featured_picks": {
+    "zuppi_brands": {
+      "type": "zuppi-brand-strip",
+      "blocks": {
+        "brand_1": {
+          "type": "brand",
+          "settings": {
+            "title": "Meadow Bowl",
+            "link": "shopify://products/zuppi-meadow-bowl-chicken-oat"
+          }
+        },
+        "brand_2": {
+          "type": "brand",
+          "settings": {
+            "title": "Tide Whisker",
+            "link": "shopify://products/zuppi-tide-whisker-tuna"
+          }
+        },
+        "brand_3": {
+          "type": "brand",
+          "settings": {
+            "title": "Harbor Bowl",
+            "link": "shopify://products/zuppi-harbor-bowl-salmon-sweet-potato"
+          }
+        },
+        "brand_4": {
+          "type": "brand",
+          "settings": {
+            "title": "Velvet Whisker",
+            "link": "shopify://products/zuppi-velvet-whisker-duck"
+          }
+        },
+        "brand_5": {
+          "type": "brand",
+          "settings": {
+            "title": "Orchard Bowl",
+            "link": "shopify://products/zuppi-orchard-bowl-turkey-apple"
+          }
+        },
+        "brand_6": {
+          "type": "brand",
+          "settings": {
+            "title": "Willow Whisker",
+            "link": "shopify://products/zuppi-willow-whisker-chicken"
+          }
+        },
+        "brand_7": {
+          "type": "brand",
+          "settings": {
+            "title": "Hearth Bowl",
+            "link": "shopify://products/zuppi-hearth-bowl-beef-stew"
+          }
+        },
+        "brand_8": {
+          "type": "brand",
+          "settings": {
+            "title": "Pine Whisker",
+            "link": "shopify://products/zuppi-pine-whisker-turkey"
+          }
+        },
+        "brand_9": {
+          "type": "brand",
+          "settings": {
+            "title": "Garden Bowl",
+            "link": "shopify://products/zuppi-garden-bowl-lamb-rice"
+          }
+        },
+        "brand_10": {
+          "type": "brand",
+          "settings": {
+            "title": "Dawn Whisker",
+            "link": "shopify://products/zuppi-dawn-whisker-salmon"
+          }
+        }
+      },
+      "block_order": [
+        "brand_1",
+        "brand_2",
+        "brand_3",
+        "brand_4",
+        "brand_5",
+        "brand_6",
+        "brand_7",
+        "brand_8",
+        "brand_9",
+        "brand_10"
+      ],
+      "settings": {
+        "heading": "Shop by brand"
+      }
+    },
+    "zuppi_featured_grid": {
       "type": "zuppi-featured-picks",
       "settings": {
-        "heading": "The Zuppi edit",
+        "heading": "Featured Products",
         "products": [
-          "zuppi-meadow-bowl-chicken-oat",
-          "zuppi-dawn-whisker-salmon",
+          "zuppi-garden-bowl-lamb-rice",
+          "zuppi-tide-whisker-tuna",
+          "zuppi-harbor-bowl-salmon-sweet-potato",
+          "zuppi-velvet-whisker-duck",
+          "zuppi-orchard-bowl-turkey-apple",
+          "zuppi-willow-whisker-chicken",
           "zuppi-hearth-bowl-beef-stew",
           "zuppi-pine-whisker-turkey"
         ],
-        "link_label": "Shop all products"
+        "static_grid": true,
+        "link_label": ""
       }
     }
   },
@@ -308,7 +429,9 @@
     "hero_jVaWmY",
     "zuppi_categories",
     "zuppi_promotion",
+    "zuppi_featured_grid",
     "zuppi_featured_picks",
-    "product_list_fa6P9H"
+    "product_list_fa6P9H",
+    "zuppi_brands"
   ]
 }
