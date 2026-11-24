@@ -1,3 +1,4 @@
+
 {% doc %}
   Outputs scoped CSS custom properties for the button-custom style class and
   direct color overrides for the button-unstyled (link) style.
@@ -60,6 +61,14 @@
       --button-background-color: {{ effective_hover_bg }};
       --button-color: {{ effective_hover_text }};
       --button-border-color: {{ effective_hover_border }};
+    }
+  {% endstyle %}
+{% endif %}
+
+{% if block_settings.custom_css != blank %}
+  {% style %}
+    .{{ block_settings.style_class }}--{{ block_id }} {
+      {{ block_settings.custom_css }}
     }
   {% endstyle %}
 {% endif %}

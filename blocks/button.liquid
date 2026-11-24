@@ -132,6 +132,25 @@
       "default": "fit-content"
     },
     {
+      "type": "header",
+      "content": "Custom CSS",
+      "visible_if": "{{ block.settings.style_class == 'button-custom' }}"
+    },
+    {
+      "type": "textarea",
+      "id": "custom_css",
+      "label": "Custom CSS",
+      "info": "Enter CSS declarations for this button.",
+      "visible_if": "{{ block.settings.style_class == 'button-custom' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrow",
+      "label": "Show circular arrow",
+      "default": false,
+      "visible_if": "{{ block.settings.style_class == 'button-custom' }}"
+    },
+    {
       "type": "range",
       "id": "custom_width_mobile",
       "label": "t:settings.custom_width",

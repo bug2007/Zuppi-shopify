@@ -18,6 +18,11 @@
   if settings.background_media != blank and settings.background_media != 'none'
     assign skip_contrast = true
   endif
+
+  assign has_hover_image = false
+  if settings.background_media == 'image' and settings.background_image != blank and settings.hover_image != blank
+    assign has_hover_image = true
+  endif
 %}
 {% render 'contrast-override', background_color: background_color, section_id: block_id, skip_contrast: skip_contrast %}
 
@@ -31,6 +36,7 @@
     size-style
     {{ class }}
     {% if background_color != blank %} color-custom-{{ block_id }}{% endif %}
+    {% if has_hover_image %} group-block--has-hover-image{% endif %}
   "
   style="
     {% render 'border-override', settings: settings %}
@@ -60,6 +66,20 @@
       background_image_position: settings.background_image_position,
       placeholder: settings.placeholder
     %}
+
+    {%- if has_hover_image -%}
+      <div class="group-block__hover-image">
+        {{
+          settings.hover_image
+          | image_url: width: 2000
+          | image_tag:
+            loading: 'lazy',
+            class: 'group-block__hover-image-element',
+            alt: ''
+        }}
+      </div>
+    {%- endif -%}
+
     {% if settings.toggle_overlay %}
       {% render 'overlay', settings: settings, layer: '0' %}
     {% endif %}
@@ -96,5 +116,31 @@
   /* Needs the .group-block__link ~ to be specific enough to take effect. */
   .group-block__link ~ .group-block-content--design-mode {
     pointer-events: auto;
+  }
+
+  .group-block--has-hover-image .group-block__media-wrapper {
+    isolation: isolate;
+  }
+
+  .group-block__hover-image {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    opacity: 0;
+    transition: opacity 0.35s ease;
+    pointer-events: none;
+  }
+
+  .group-block__hover-image-element {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  @media (hover: hover) {
+    .group-block--has-hover-image:hover .group-block__hover-image {
+      opacity: 1;
+    }
   }
 {% endstylesheet %}

@@ -11,11 +11,12 @@
   "type": "footer",
   "name": "t:names.footer",
   "sections": {
-    "footer_m9NzUG": {
-      "type": "footer",
+    "section_V3DRcF": {
+      "type": "section",
       "blocks": {
-        "group_H6VpwJ": {
+        "group_ieGHkQ": {
           "type": "group",
+          "name": "t:names.group",
           "settings": {
             "content_direction": "column",
             "vertical_on_mobile": true,
@@ -24,7 +25,7 @@
             "align_baseline": false,
             "horizontal_alignment_flex_direction_column": "flex-start",
             "vertical_alignment_flex_direction_column": "center",
-            "gap": 6,
+            "gap": 10,
             "width": "fill",
             "custom_width": 100,
             "width_mobile": "fill",
@@ -32,37 +33,43 @@
             "height": "fit",
             "custom_height": 100,
             "background_media": "none",
+            "background_color": "",
             "video_position": "cover",
             "background_image_position": "cover",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0,
             "toggle_overlay": false,
             "overlay_color": "#00000026",
             "overlay_style": "solid",
             "gradient_direction": "to top",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_color": "",
+            "border_radius": 0,
+            "link": "",
             "open_in_new_tab": false,
+            "placeholder": "",
             "padding-block-start": 0,
             "padding-block-end": 0,
             "padding-inline-start": 0,
             "padding-inline-end": 0
           },
           "blocks": {
-            "text_LWt8Pz": {
+            "text_4BHrzy": {
               "type": "text",
+              "name": "t:names.heading",
               "settings": {
-                "text": "<h2>Join our email list</h2>",
+                "text": "<h3>Be first in line at Zuppi</h3>",
                 "width": "100%",
                 "max_width": "normal",
                 "alignment": "left",
-                "type_preset": "h4",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
+                "type_preset": "custom",
+                "font": "'Fredoka', sans-serif",
+                "font_size": "2rem",
                 "line_height": "normal",
                 "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
+                "case": "uppercase",
+                "wrap": "nowrap",
+                "text_color": "",
                 "background": false,
                 "background_color": "#00000026",
                 "corner_radius": 0,
@@ -73,20 +80,21 @@
               },
               "blocks": {}
             },
-            "text_f9CFLH": {
+            "text_CYUVwQ": {
               "type": "text",
               "settings": {
-                "text": "<p>Get exclusive deals and early access to new products.</p>",
+                "text": "<p>Get early access to new arrivals, exclusive deals, and offers made for Zuppi shoppers.<br/></p>",
                 "width": "100%",
                 "max_width": "normal",
                 "alignment": "left",
-                "type_preset": "rte",
+                "type_preset": "custom",
                 "font": "var(--font-body--family)",
                 "font_size": "1rem",
                 "line_height": "normal",
                 "letter_spacing": "normal",
                 "case": "none",
                 "wrap": "pretty",
+                "text_color": "",
                 "background": false,
                 "background_color": "#00000026",
                 "corner_radius": 0,
@@ -99,29 +107,35 @@
             }
           },
           "block_order": [
-            "text_LWt8Pz",
-            "text_f9CFLH"
+            "text_4BHrzy",
+            "text_CYUVwQ"
           ]
         },
-        "email_signup_crihX7": {
+        "email_signup_pxWb9a": {
           "type": "email-signup",
           "settings": {
-            "width": "fill",
-            "custom_width": 100,
-            "heading_preset": "h3",
-            "border_style": "all",
+            "width": "custom",
+            "custom_width": 50,
+            "heading": "",
+            "heading_text_color": "",
+            "heading_preset": "",
+            "border_style": "none",
             "input_style": "custom",
             "border_width": 1,
-            "border_radius": 100,
-            "input_background_color": "{{ settings.color_palette.background }}",
-            "input_text_color": "{{ settings.color_palette.color1 }}",
-            "input_border_color": "{{ settings.color_palette.color2 }}",
+            "border_radius": 10,
+            "input_background_color": "#fff8f0",
+            "input_text_color": "",
+            "input_border_color": "",
             "input_type_preset": "paragraph",
-            "style_class": "button-unstyled",
-            "display_type": "arrow",
-            "label": "Sign up",
-            "integrated_button": true,
-            "button_type_preset": "paragraph",
+            "style_class": "button-custom",
+            "custom_button_background": "#f48e18",
+            "custom_button_text": "#1a1a44",
+            "custom_button_border": "rgba(0,0,0,0)",
+            "link_text_color": "",
+            "display_type": "text",
+            "label": "SUBSCRIBE",
+            "integrated_button": false,
+            "button_type_preset": "",
             "padding-block-start": 0,
             "padding-block-end": 0,
             "padding-inline-start": 0,
@@ -131,18 +145,97 @@
         }
       },
       "block_order": [
-        "group_H6VpwJ",
-        "email_signup_crihX7"
+        "group_ieGHkQ",
+        "email_signup_pxWb9a"
+      ],
+      "name": "t:names.email_signup",
+      "settings": {
+        "content_direction": "row",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "center",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "center",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 16,
+        "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "background_media": "none",
+        "background_color": "#1e1b4b",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_color": "",
+        "border_radius": 0,
+        "padding-block-start": 50,
+        "padding-block-end": 50
+      }
+    },
+    "footer_hWgijP": {
+      "type": "footer",
+      "blocks": {
+        "menu_NQhHb6": {
+          "type": "menu",
+          "name": "t:names.menu",
+          "settings": {
+            "menu": "footer",
+            "heading": "",
+            "menu_spacing": 12,
+            "show_as_accordion": false,
+            "accordion_icon": "caret",
+            "accordion_dividers": false,
+            "background_color": "",
+            "text_color": "",
+            "heading_preset": "h4",
+            "link_preset": "paragraph",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "menu_XWprWF": {
+          "type": "menu",
+          "name": "t:names.menu",
+          "settings": {
+            "menu": "help-information",
+            "heading": "",
+            "menu_spacing": 12,
+            "show_as_accordion": false,
+            "accordion_icon": "caret",
+            "accordion_dividers": false,
+            "background_color": "",
+            "text_color": "",
+            "heading_preset": "h4",
+            "link_preset": "paragraph",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "menu_NQhHb6",
+        "menu_XWprWF"
       ],
       "name": "t:names.footer",
       "settings": {
         "section_width": "page-width",
         "gap": 20,
-        "background_color": "{{ settings.color_palette.background }}",
-        "padding-block-start": 30,
-        "padding-block-end": 30
-      },
-      "disabled": true
+        "background_color": "#d9d5ee",
+        "padding-block-start": 36,
+        "padding-block-end": 36
+      }
     },
     "footer_utilities_jLGE8U": {
       "type": "footer-utilities",
@@ -151,6 +244,7 @@
           "type": "footer-copyright",
           "settings": {
             "show_powered_by": true,
+            "text_color": "",
             "font_size": "0.75rem",
             "case": "none"
           },
@@ -159,6 +253,7 @@
         "footer_policy_list_VCdnpa": {
           "type": "footer-policy-list",
           "settings": {
+            "text_color": "",
             "font_size": "0.75rem",
             "case": "none"
           },
@@ -167,11 +262,20 @@
         "social_links_Ew63Kq": {
           "type": "social-links",
           "settings": {
+            "icon_color": "",
             "facebook_url": "https://www.facebook.com/",
             "instagram_url": "https://www.instagram.com/",
             "youtube_url": "https://www.youtube.com/",
             "tiktok_url": "https://www.tiktok.com/",
-            "twitter_url": "https://x.com/"
+            "twitter_url": "https://x.com/",
+            "threads_url": "",
+            "linkedin_url": "",
+            "bluesky_url": "",
+            "snapchat_url": "",
+            "pinterest_url": "",
+            "tumblr_url": "",
+            "vimeo_url": "",
+            "custom_url": ""
           },
           "blocks": {}
         }
@@ -181,26 +285,22 @@
         "footer_policy_list_VCdnpa",
         "social_links_Ew63Kq"
       ],
+      "disabled": true,
       "name": "t:names.utilities",
       "settings": {
         "section_width": "page-width",
         "gap": 24,
+        "background_color": "{{ settings.color_palette.background }}",
         "divider_thickness": 1,
         "divider_color": "{{ settings.color_palette.color2 }}",
-        "background_color": "{{ settings.color_palette.background }}",
         "padding-block-start": 20,
         "padding-block-end": 48
-      },
-      "disabled": true
-    },
-    "zuppi_footer": {
-      "type": "zuppi-footer",
-      "settings": {}
+      }
     }
   },
   "order": [
-    "zuppi_footer",
-    "footer_m9NzUG",
+    "section_V3DRcF",
+    "footer_hWgijP",
     "footer_utilities_jLGE8U"
   ]
 }

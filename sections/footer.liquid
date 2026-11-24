@@ -1,4 +1,4 @@
-
+{% comment %} 
 
 {% liquid
   if section.settings.background_color != blank
@@ -258,6 +258,520 @@
         }
       },
       "block_order": ["newsletter-group", "newsletter-form"]
+    }
+  ]
+}
+{% endschema %} {% endcomment %}
+
+
+
+
+{% liquid
+  if section.settings.background_color != blank
+    render 'contrast-override', background_color: section.settings.background_color, section_id: section.id
+  endif
+%}
+
+<div
+  class="section-background{% if section.settings.background_color != blank %} color-custom-{{ section.id }}{% endif %}"
+></div>
+
+<div
+  class="section section--{{ section.settings.section_width }}{% if section.settings.background_color != blank %} color-custom-{{ section.id }}{% endif %}"
+>
+  <div
+    class="zuppi-footer-layout"
+    style="{% render 'spacing-style', settings: section.settings %}"
+  >
+
+    <!-- BRAND COLUMN -->
+    <div class="zuppi-footer-brand">
+      <a href="{{ routes.root_url }}" class="zuppi-footer-logo" aria-label="Zuppi home">
+        <span>Zupp</span><span class="zuppi-footer-logo-i">i</span>
+      </a>
+
+      <p class="zuppi-footer-description">
+        A little more joy in every day.
+        Discover playful finds and everyday favourites made for happy moments.
+      </p>
+
+      <div class="zuppi-footer-socials">
+        {% if settings.social_instagram_link != blank %}
+          <a href="{{ settings.social_instagram_link }}" target="_blank" rel="noopener" aria-label="Instagram">
+            Instagram
+          </a>
+        {% endif %}
+
+        {% if settings.social_tiktok_link != blank %}
+          <a href="{{ settings.social_tiktok_link }}" target="_blank" rel="noopener" aria-label="TikTok">
+            TikTok
+          </a>
+        {% endif %}
+
+        {% if settings.social_facebook_link != blank %}
+          <a href="{{ settings.social_facebook_link }}" target="_blank" rel="noopener" aria-label="Facebook">
+            Facebook
+          </a>
+        {% endif %}
+
+        {% if settings.social_youtube_link != blank %}
+          <a href="{{ settings.social_youtube_link }}" target="_blank" rel="noopener" aria-label="YouTube">
+            YouTube
+          </a>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- MENU COLUMNS -->
+    <div class="zuppi-footer-menus">
+      {% content_for 'blocks' %}
+    </div>
+
+    <!-- CONTACT COLUMN -->
+    <div class="zuppi-footer-contact">
+      <h3 class="zuppi-footer-heading">Say Hello</h3>
+
+      <div class="zuppi-footer-heading-line"></div>
+
+      <div class="zuppi-footer-contact-items">
+
+        {% if shop.email != blank %}
+          <a href="mailto:{{ shop.email }}" class="zuppi-footer-contact-item">
+            <span class="zuppi-footer-contact-icon">✉</span>
+            <span>zuppi@gmail.com</span>
+          </a>
+        {% endif %}
+
+        {% if shop.phone != blank %}
+          <a href="tel:{{ shop.phone }}" class="zuppi-footer-contact-item">
+            <span class="zuppi-footer-contact-icon">☎</span>
+            <span>{{ shop.phone }}</span>
+          </a>
+        {% endif %}
+
+        <a href="{{ routes.contact_url }}" class="zuppi-footer-contact-item">
+          <span class="zuppi-footer-contact-icon">↗</span>
+          <span>Get in touch</span>
+        </a>
+
+      </div>
+
+      <p class="zuppi-footer-contact-note">
+        Have a question or need a hand? We'd love to hear from you.
+      </p>
+    </div>
+
+  </div>
+
+  <!-- BOTTOM BAR -->
+  <div class="zuppi-footer-bottom">
+
+    <span class="zuppi-footer-copyright">
+      © {{ 'now' | date: '%Y' }} Zuppi. All rights reserved.
+    </span>
+
+    <div class="zuppi-footer-legal">
+      {% if shop.privacy_policy != blank %}
+        <a href="{{ shop.privacy_policy.url }}">Privacy Policy</a>
+      {% endif %}
+
+      {% if shop.terms_of_service != blank %}
+        <a href="{{ shop.terms_of_service.url }}">Terms of Service</a>
+      {% endif %}
+
+      {% if shop.refund_policy != blank %}
+        <a href="{{ shop.refund_policy.url }}">Refund Policy</a>
+      {% endif %}
+    </div>
+
+    <span class="zuppi-footer-made">
+      Made with love <span>♥</span>
+    </span>
+
+  </div>
+</div>
+
+
+{% stylesheet %}
+
+/* =========================================
+   FOOTER LAYOUT
+========================================= */
+
+.zuppi-footer-layout {
+  display: grid;
+  grid-template-columns: 1.15fr 2fr 1.1fr;
+  gap: 55px;
+  align-items: start;
+  padding-block: 55px 45px;
+}
+
+
+/* =========================================
+   BRAND
+========================================= */
+
+.zuppi-footer-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.zuppi-footer-logo {
+  display: inline-flex;
+  align-items: baseline;
+  text-decoration: none;
+  color: #211D4D;
+  font-family: var(--font-heading--family);
+  font-size: clamp(65px, 7vw, 100px);
+  font-weight: 900;
+  letter-spacing: -0.085em;
+  line-height: 0.85;
+}
+
+.zuppi-footer-logo-i {
+  color: #FF795F;
+}
+
+.zuppi-footer-description {
+  max-width: 290px;
+  margin: 25px 0 24px;
+  color: #37334D;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.zuppi-footer-socials {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.zuppi-footer-socials a {
+  color: #211D4D;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.zuppi-footer-socials a:hover {
+  color: #FF795F;
+}
+
+
+/* =========================================
+   MENU COLUMNS
+========================================= */
+
+.zuppi-footer-menus {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 35px;
+  align-items: start;
+  min-width: 0;
+}
+
+
+/* =========================================
+   CONTACT
+========================================= */
+
+.zuppi-footer-heading {
+  margin: 0;
+  color: #211D4D;
+  font-family: var(--font-heading--family);
+  font-size: 21px;
+  font-weight: 700;
+}
+
+.zuppi-footer-heading-line {
+  width: 38px;
+  height: 3px;
+  margin-top: 15px;
+  border-radius: 10px;
+  background: #FF795F;
+}
+
+.zuppi-footer-contact-items {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 28px;
+}
+
+.zuppi-footer-contact-item {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  color: #37334D;
+  font-size: 14px;
+  line-height: 1.5;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+  transition: color 0.2s ease;
+}
+
+.zuppi-footer-contact-item:hover {
+  color: #FF795F;
+}
+
+.zuppi-footer-contact-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 22px;
+  color: #211D4D;
+  font-size: 20px;
+}
+
+.zuppi-footer-contact-note {
+  max-width: 260px;
+  margin: 25px 0 0;
+  color: #514D62;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+
+/* =========================================
+   BOTTOM BAR
+========================================= */
+
+.zuppi-footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding-block: 22px;
+  border-top: 1px solid rgb(33 29 77 / 16%);
+  color: #37334D;
+  font-size: 12px;
+}
+
+.zuppi-footer-legal {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 22px;
+}
+
+.zuppi-footer-legal a {
+  color: #37334D;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.zuppi-footer-legal a:hover {
+  color: #FF795F;
+}
+
+.zuppi-footer-made span {
+  color: #FF795F;
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media screen and (max-width: 989px) {
+  .zuppi-footer-layout {
+    grid-template-columns: 1fr 1.5fr;
+    gap: 45px 35px;
+  }
+
+  .zuppi-footer-brand {
+    grid-column: 1 / -1;
+  }
+
+  .zuppi-footer-description {
+    max-width: 400px;
+  }
+
+  .zuppi-footer-contact {
+    grid-column: 2;
+  }
+
+  .zuppi-footer-menus {
+    grid-column: 1;
+    grid-row: 2;
+  }
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media screen and (max-width: 749px) {
+  .zuppi-footer-layout {
+    grid-template-columns: 1fr;
+    gap: 42px;
+    padding-block: 40px 35px;
+  }
+
+  .zuppi-footer-brand,
+  .zuppi-footer-menus,
+  .zuppi-footer-contact {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .zuppi-footer-logo {
+    font-size: clamp(75px, 19vw, 105px);
+  }
+
+  .zuppi-footer-description {
+    max-width: 330px;
+  }
+
+  .zuppi-footer-menus {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 25px 18px;
+  }
+
+  .zuppi-footer-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .zuppi-footer-legal {
+    justify-content: flex-start;
+    gap: 12px 18px;
+  }
+}
+
+@media screen and (max-width: 380px) {
+  .zuppi-footer-menus {
+    grid-template-columns: 1fr;
+  }
+}
+
+{% endstylesheet %}
+
+
+{% schema %}
+{
+  "name": "t:names.footer",
+  "class": "section-wrapper",
+  "blocks": [
+    {
+      "type": "_divider"
+    },
+    {
+      "type": "@app"
+    },
+    {
+      "type": "button"
+    },
+    {
+      "type": "follow-on-shop"
+    },
+    {
+      "type": "group"
+    },
+    {
+      "type": "icon"
+    },
+    {
+      "type": "image"
+    },
+    {
+      "type": "menu"
+    },
+    {
+      "type": "payment-icons"
+    },
+    {
+      "type": "text"
+    },
+    {
+      "type": "logo"
+    },
+    {
+      "type": "jumbo-text"
+    },
+    {
+      "type": "social-links"
+    },
+    {
+      "type": "email-signup"
+    }
+  ],
+  "enabled_on": {
+    "groups": ["footer"]
+  },
+  "settings": [
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "t:settings.width",
+      "options": [
+        {
+          "value": "page-width",
+          "label": "t:options.page"
+        },
+        {
+          "value": "full-width",
+          "label": "t:options.full"
+        }
+      ],
+      "default": "page-width"
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "label": "t:settings.gap",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "t:settings.background_color",
+      "default": "{{ settings.color_palette.foreground }}"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.footer",
+      "category": "t:categories.footer",
+      "settings": {
+        "gap": 20,
+        "padding-block-start": 36,
+        "padding-block-end": 36
+      }
     }
   ]
 }
