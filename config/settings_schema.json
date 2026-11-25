@@ -63,8 +63,12 @@
         "type": "color_palette",
         "id": "color_palette",
         "default": {
-          "background": "#ffffff",
-          "foreground": "#000000"
+          "background": "#FBF8F3",
+          "foreground": "#2B2623",
+          "color1": "#2F4A45",
+          "color2": "#DDD6CB",
+          "color3": "#F0EBE3",
+          "color4": "#7A716A"
         }
       }
     ]
@@ -94,25 +98,25 @@
       {
         "type": "font_picker",
         "id": "type_body_font",
-        "default": "work_sans_n4",
+        "default": "dm_sans_n4",
         "label": "t:options.body"
       },
       {
         "type": "font_picker",
         "id": "type_subheading_font",
-        "default": "work_sans_n5",
+        "default": "dm_sans_n5",
         "label": "t:options.subheading"
       },
       {
         "type": "font_picker",
         "id": "type_heading_font",
-        "default": "anonymous_pro_n4",
+        "default": "dm_serif_display_n4",
         "label": "t:options.heading"
       },
       {
         "type": "font_picker",
         "id": "type_accent_font",
-        "default": "anonymous_pro_n4",
+        "default": "dm_sans_n7",
         "label": "t:options.accent"
       },
       {
@@ -1228,7 +1232,7 @@
         "type": "color",
         "id": "badge_sold_out_background_color",
         "label": "t:settings.badge_sold_out_background_color",
-        "default": "{{ settings.color_palette.background }}"
+        "default": "{{ settings.color_palette.color3 }}"
       },
       {
         "type": "color",
@@ -1293,7 +1297,7 @@
         "type": "color",
         "id": "palette_primary_button_background",
         "label": "t:settings.background",
-        "default": "{{ settings.color_palette.foreground }}",
+        "default": "{{ settings.color_palette.color1 }}",
         "alpha": true
       },
       {
@@ -1307,7 +1311,7 @@
         "type": "color",
         "id": "palette_primary_button_border",
         "label": "t:settings.borders",
-        "default": "{{ settings.color_palette.background }}",
+        "default": "{{ settings.color_palette.color1 }}",
         "alpha": true
       },
       {
@@ -1377,14 +1381,14 @@
         "type": "color",
         "id": "palette_secondary_button_text",
         "label": "t:settings.text",
-        "default": "{{ settings.color_palette.foreground }}",
+        "default": "{{ settings.color_palette.color1 }}",
         "alpha": true
       },
       {
         "type": "color",
         "id": "palette_secondary_button_border",
         "label": "t:settings.borders",
-        "default": "{{ settings.color_palette.foreground }}",
+        "default": "{{ settings.color_palette.color1 }}",
         "alpha": true
       },
       {
@@ -1641,7 +1645,7 @@
         "type": "color",
         "id": "drawer_border_color",
         "label": "t:settings.border_color",
-        "default": "{{ settings.color_palette.foreground }}",
+        "default": "{{ settings.color_palette.color2 }}",
         "alpha": true
       }
     ]
@@ -1690,7 +1694,7 @@
         "type": "color",
         "id": "palette_input_border",
         "label": "t:settings.borders",
-        "default": "{{ settings.color_palette.foreground }}"
+        "default": "{{ settings.color_palette.color2 }}"
       },
       {
         "type": "range",
@@ -1783,7 +1787,7 @@
         "type": "color",
         "id": "popover_border_color",
         "label": "t:settings.border_color",
-        "default": "{{ settings.color_palette.foreground }}",
+        "default": "{{ settings.color_palette.color2 }}",
         "alpha": true
       },
       {
@@ -2048,7 +2052,7 @@
         "type": "color",
         "id": "palette_variant_border",
         "label": "t:settings.borders",
-        "default": "{{ settings.color_palette.foreground }}",
+        "default": "{{ settings.color_palette.color2 }}",
         "alpha": true
       },
       {
@@ -2059,7 +2063,7 @@
         "type": "color",
         "id": "palette_selected_variant_background",
         "label": "t:settings.background",
-        "default": "{{ settings.color_palette.foreground }}",
+        "default": "{{ settings.color_palette.color1 }}",
         "alpha": true
       },
       {
@@ -2073,7 +2077,7 @@
         "type": "color",
         "id": "palette_selected_variant_border",
         "label": "t:settings.borders",
-        "default": "{{ settings.color_palette.foreground }}",
+        "default": "{{ settings.color_palette.color1 }}",
         "alpha": true
       },
       {

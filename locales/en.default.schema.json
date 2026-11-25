@@ -764,6 +764,8 @@
     "stack_media_on_mobile": "Stack media",
     "auto_rotate_announcements": "Auto-rotate announcements",
     "auto_rotate_slides": "Auto-rotate slides",
+    "zoom_out_effect": "Slow zoom-out on images",
+    "zoom_out_duration": "Zoom-out duration",
     "auto_load_products": "Auto load products on scroll",
     "autoplay": "Autoplay",
     "background": "Background",

@@ -1,8 +1,24 @@
-
-
 {%- capture children %}
   {% content_for 'blocks' %}
 {% endcapture %}
+
+{%- if block.settings.custom_css != blank -%}
+  {%- comment -%}
+    Scoped custom CSS. The style tag sits right before the group's markup and the
+    selector targets the next element (skipping one style tag, in case the group
+    snippet outputs a color override first). Rules are wrapped in native CSS
+    nesting, so bare declarations apply to the group itself and nested selectors
+    and @media queries work as written.
+  {%- endcomment -%}
+  <style data-group-css="{{ block.id }}">
+    :is(
+      style[data-group-css="{{ block.id }}"] + *:not(style),
+      style[data-group-css="{{ block.id }}"] + style + *
+    ) {
+      {{ block.settings.custom_css }}
+    }
+  </style>
+{%- endif -%}
 
 {% render 'group',
   children: children,
@@ -514,6 +530,16 @@
       "step": 1,
       "unit": "px",
       "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Custom CSS"
+    },
+    {
+      "type": "textarea",
+      "id": "custom_css",
+      "label": "Custom CSS",
+      "info": "Applies only to this group. Plain declarations style the group itself; use nested selectors (e.g. .button { }) and @media queries for children and screen sizes."
     }
   ],
   "presets": [

@@ -9,64 +9,34 @@
  */
 {
   "sections": {
-    "section_tGE84z": {
-      "type": "section",
+    "slideshow_hbqVga": {
+      "type": "slideshow",
       "blocks": {
-        "group_8QthDC": {
-          "type": "group",
+        "slide_wgQh3C": {
+          "type": "_slide",
           "settings": {
+            "media_type_1": "image",
+            "image_1": "shopify://shop_images/dog-with-food-and-toys-right-aligned.png",
             "content_direction": "column",
             "vertical_on_mobile": true,
             "horizontal_alignment": "flex-start",
             "vertical_alignment": "center",
             "align_baseline": false,
-            "horizontal_alignment_flex_direction_column": "center",
+            "horizontal_alignment_flex_direction_column": "flex-start",
             "vertical_alignment_flex_direction_column": "center",
-            "gap": 32,
-            "width": "fill",
-            "custom_width": 100,
-            "width_mobile": "fill",
-            "custom_width_mobile": 100,
-            "height": "fill",
-            "custom_height": 100,
-            "background_media": "image",
+            "gap": 12,
             "background_color": "",
-            "video_position": "cover",
-            "background_image": "shopify://shop_images/photo-1598134493179-51332e56807f.webp",
-            "hover_image": "shopify://shop_images/Gemini_Generated_Image_qjtnkkqjtnkkqjtn.webp",
-            "background_image_position": "cover",
-            "toggle_overlay": true,
-            "overlay_color": "#0000001a",
-            "overlay_style": "gradient",
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
             "gradient_direction": "to top",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_color": "",
-            "border_radius": 0,
-            "link": "",
-            "open_in_new_tab": false,
-            "placeholder": "hero-apparel-2",
-            "padding-block-start": 40,
-            "padding-block-end": 40,
-            "padding-inline-start": 40,
-            "padding-inline-end": 40
+            "padding-block-start": 48,
+            "padding-block-end": 48,
+            "padding-inline-start": 48,
+            "padding-inline-end": 48
           },
           "blocks": {
-            "spacer_MCwmMA": {
-              "type": "spacer",
-              "settings": {
-                "size": "pixel",
-                "percent_size": 100,
-                "pixel_size": 16,
-                "custom_mobile_size": false,
-                "size_mobile": "percent",
-                "percent_size_mobile": 100,
-                "pixel_size_mobile": 120
-              },
-              "blocks": {}
-            },
-            "group_bYACh7": {
+            "group_yWtmyg": {
               "type": "group",
               "name": "t:names.group",
               "settings": {
@@ -102,41 +72,42 @@
                 "placeholder": "",
                 "padding-block-start": 0,
                 "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
+                "padding-inline-start": 40,
+                "padding-inline-end": 0,
+                "custom_css": ""
               },
               "blocks": {
-                "text_EbmkEW": {
+                "text_HFmRwE": {
                   "type": "text",
                   "name": "t:names.heading",
                   "settings": {
-                    "text": "<h2><strong>THE PUP CLUB</strong></h2>",
+                    "text": "<h3>THE PUP CLUB</h3>",
                     "width": "fit-content",
                     "max_width": "normal",
                     "alignment": "left",
                     "type_preset": "custom",
-                    "font": "'Fredoka', sans-serif",
-                    "font_size": "3.5rem",
+                    "font": "var(--font-heading--family)",
+                    "font_size": "3rem",
                     "line_height": "normal",
-                    "letter_spacing": "normal",
+                    "letter_spacing": "loose",
                     "case": "none",
                     "wrap": "pretty",
-                    "text_color": "#ffffff",
+                    "text_color": "{{ settings.color_palette.foreground }}",
                     "background": false,
                     "background_color": "#00000026",
                     "corner_radius": 0,
                     "padding-block-start": 0,
                     "padding-block-end": 0,
                     "padding-inline-start": 0,
-                    "padding-inline-end": 0
+                    "padding-inline-end": 0,
+                    "custom_css": ""
                   },
                   "blocks": {}
                 },
-                "text_hcyVeX": {
+                "text_cjEEEx": {
                   "type": "text",
-                  "name": "t:names.text",
                   "settings": {
-                    "text": "<p>Discover everyday essentials, playful toys and comfy favourites for dogs of every size and personality.</p>",
+                    "text": "<p>From cosy hideaways to playful toys, find lovely essentials for every little companion.</p>",
                     "width": "fit-content",
                     "max_width": "normal",
                     "alignment": "left",
@@ -147,32 +118,33 @@
                     "letter_spacing": "normal",
                     "case": "none",
                     "wrap": "pretty",
-                    "text_color": "#ffffff",
+                    "text_color": "",
                     "background": false,
                     "background_color": "#00000026",
                     "corner_radius": 0,
                     "padding-block-start": 0,
-                    "padding-block-end": 0,
+                    "padding-block-end": 20,
                     "padding-inline-start": 0,
-                    "padding-inline-end": 0
+                    "padding-inline-end": 0,
+                    "custom_css": ""
                   },
                   "blocks": {}
                 },
-                "button_P7z4Jb": {
+                "button_L3ePxc": {
                   "type": "button",
                   "settings": {
                     "label": "Shop The Dogs",
                     "link": "shopify://collections/dogs",
                     "open_in_new_tab": false,
                     "style_class": "button-custom",
-                    "custom_button_background": "{{ settings.color_palette.foreground }}",
+                    "custom_button_background": "{{ settings.color_palette.color1 }}",
                     "custom_button_text": "{{ settings.color_palette.background }}",
-                    "custom_button_border": "",
+                    "custom_button_border": "rgba(0,0,0,0)",
                     "link_text_color": "",
                     "width": "fit-content",
-                    "custom_width": 35,
+                    "custom_width": 100,
                     "width_mobile": "fit-content",
-                    "custom_css": "/* Button styling */\nbackground-color: #FFD15C;\ncolor: #17132F;\nborder: none;\nborder-radius: 10px;\npadding: 5px 20px;\nmin-height: 60px;\nfont-family: 'Fredoka', sans-serif;\nfont-size: 20px;\nfont-weight: 600;\nletter-spacing: 0.2px;\n\ndisplay: inline-flex;\nalign-items: center;\njustify-content: center;\ngap: 12px;\n\nposition: relative;\noverflow: hidden;\nisolation: isolate;\n\n/* Color sweep */\n&::before {\n  content: \"\";\n  position: absolute;\n  inset: 0;\n  background-color: #17132F;\n  transform: scaleX(0);\n  transform-origin: left;\n  transition: transform 0.4s ease;\n  border-radius: inherit;\n  z-index: -1;\n}\n\n/* Arrow */\n&::after {\n  content: \"→\";\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  width: auto;\n  height: auto;\n  flex-shrink: 0;\n  background: transparent;\n  color: #17132F;\n  font-size: 20px;\n  line-height: 1;\n  position: relative;\n  top: -2px;\n  transition: transform 0.25s ease, color 0.25s ease;\n}\n\n/* Hover */\n&:hover {\n  color: #FFD15C;\n\n  &::before {\n    transform: scaleX(1);\n  }\n\n  &::after {\n    color: #FFD15C;\n    transform: translateX(3px);\n  }\n}",
+                    "custom_css": "/* Button styling */\nbackground-color: #2F4A45;\ncolor: #FBF8F3;\nborder: none;\npadding: 5px 20px;\nmin-height: 60px;\n\ndisplay: inline-flex;\nalign-items: center;\njustify-content: center;\ngap: 12px;\n\nposition: relative;\noverflow: hidden;\nisolation: isolate;\n\n/* Color sweep */\n&::before {\n  content: \"\";\n  position: absolute;\n  inset: 0;\n  background-color: #7A716A;\n  transform: scaleX(0);\n  transform-origin: left;\n  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);\n  z-index: -1;\n}\n\n/* Arrow */\n&::after {\n  content: \"→\";\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  width: auto;\n  height: auto;\n  flex-shrink: 0;\n  background: transparent;\n  color: inherit;\n  font-size: 20px;\n  line-height: 1;\n  position: relative;\n  top: -1px;\n  transition: transform 0.35s ease, color 0.35s ease;\n}\n\n/* Hover */\n&:hover {\n  color: #FFFFFF;\n\n  &::before {\n    transform: scaleX(1);\n  }\n\n  &::after {\n    color: #FFFFFF;\n    transform: translateX(4px);\n  }\n}",
                     "show_arrow": false,
                     "custom_width_mobile": 100
                   },
@@ -180,72 +152,41 @@
                 }
               },
               "block_order": [
-                "text_EbmkEW",
-                "text_hcyVeX",
-                "button_P7z4Jb"
+                "text_HFmRwE",
+                "text_cjEEEx",
+                "button_L3ePxc"
               ]
             }
           },
           "block_order": [
-            "spacer_MCwmMA",
-            "group_bYACh7"
+            "group_yWtmyg"
           ]
         },
-        "group_DcQGGg": {
-          "type": "group",
+        "slide_tefzj7": {
+          "type": "_slide",
           "settings": {
+            "media_type_1": "image",
+            "image_1": "shopify://shop_images/Ginger_Tabby_on_a_Plush_Cat_Tree.png",
             "content_direction": "column",
             "vertical_on_mobile": true,
             "horizontal_alignment": "flex-start",
             "vertical_alignment": "center",
             "align_baseline": false,
-            "horizontal_alignment_flex_direction_column": "center",
+            "horizontal_alignment_flex_direction_column": "flex-start",
             "vertical_alignment_flex_direction_column": "center",
-            "gap": 32,
-            "width": "fill",
-            "custom_width": 100,
-            "width_mobile": "fill",
-            "custom_width_mobile": 100,
-            "height": "fill",
-            "custom_height": 100,
-            "background_media": "image",
+            "gap": 12,
             "background_color": "",
-            "video_position": "cover",
-            "background_image": "shopify://shop_images/Gemini_Generated_Image_id9qhxid9qhxid9q.webp",
-            "hover_image": "shopify://shop_images/Gemini_Generated_Image_4duw844duw844duw.webp",
-            "background_image_position": "cover",
-            "toggle_overlay": true,
-            "overlay_color": "#0000001a",
-            "overlay_style": "gradient",
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
             "gradient_direction": "to top",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_color": "",
-            "border_radius": 0,
-            "link": "",
-            "open_in_new_tab": false,
-            "placeholder": "hero-apparel-1",
-            "padding-block-start": 40,
-            "padding-block-end": 40,
-            "padding-inline-start": 40,
-            "padding-inline-end": 40
+            "padding-block-start": 48,
+            "padding-block-end": 48,
+            "padding-inline-start": 48,
+            "padding-inline-end": 48
           },
           "blocks": {
-            "spacer_G4f3UW": {
-              "type": "spacer",
-              "settings": {
-                "size": "pixel",
-                "percent_size": 100,
-                "pixel_size": 16,
-                "custom_mobile_size": false,
-                "size_mobile": "percent",
-                "percent_size_mobile": 100,
-                "pixel_size_mobile": 120
-              },
-              "blocks": {}
-            },
-            "group_WW4cjJ": {
+            "group_cHYJX3": {
               "type": "group",
               "name": "t:names.group",
               "settings": {
@@ -281,39 +222,40 @@
                 "placeholder": "",
                 "padding-block-start": 0,
                 "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
+                "padding-inline-start": 40,
+                "padding-inline-end": 0,
+                "custom_css": ""
               },
               "blocks": {
-                "text_PbTKDj": {
+                "text_y7ftMz": {
                   "type": "text",
                   "name": "t:names.heading",
                   "settings": {
-                    "text": "<h2><strong>THE CAT CLUB</strong></h2>",
+                    "text": "<h2>THE CAT CLUB</h2>",
                     "width": "fit-content",
                     "max_width": "normal",
                     "alignment": "left",
                     "type_preset": "custom",
-                    "font": "'Fredoka', sans-serif",
-                    "font_size": "3.5rem",
+                    "font": "var(--font-heading--family)",
+                    "font_size": "3rem",
                     "line_height": "normal",
-                    "letter_spacing": "normal",
+                    "letter_spacing": "loose",
                     "case": "none",
                     "wrap": "pretty",
-                    "text_color": "#1e1b4b",
+                    "text_color": "{{ settings.color_palette.foreground }}",
                     "background": false,
                     "background_color": "#00000026",
                     "corner_radius": 0,
                     "padding-block-start": 0,
                     "padding-block-end": 0,
                     "padding-inline-start": 0,
-                    "padding-inline-end": 0
+                    "padding-inline-end": 0,
+                    "custom_css": ""
                   },
                   "blocks": {}
                 },
-                "text_iTVPyi": {
+                "text_EFjUM4": {
                   "type": "text",
-                  "name": "t:names.text",
                   "settings": {
                     "text": "<p>Explore cosy comforts, playful toys and delightful everyday essentials made for curious cats.</p>",
                     "width": "fit-content",
@@ -326,32 +268,33 @@
                     "letter_spacing": "normal",
                     "case": "none",
                     "wrap": "pretty",
-                    "text_color": "#1e1b4b",
+                    "text_color": "",
                     "background": false,
                     "background_color": "#00000026",
                     "corner_radius": 0,
                     "padding-block-start": 0,
-                    "padding-block-end": 0,
+                    "padding-block-end": 20,
                     "padding-inline-start": 0,
-                    "padding-inline-end": 0
+                    "padding-inline-end": 0,
+                    "custom_css": ""
                   },
                   "blocks": {}
                 },
-                "button_WzpYy7": {
+                "button_Ew7mMw": {
                   "type": "button",
                   "settings": {
                     "label": "Shop The Cats",
                     "link": "shopify://collections/cats",
                     "open_in_new_tab": false,
                     "style_class": "button-custom",
-                    "custom_button_background": "{{ settings.color_palette.foreground }}",
+                    "custom_button_background": "{{ settings.color_palette.color1 }}",
                     "custom_button_text": "{{ settings.color_palette.background }}",
-                    "custom_button_border": "",
+                    "custom_button_border": "rgba(0,0,0,0)",
                     "link_text_color": "",
                     "width": "fit-content",
                     "custom_width": 100,
                     "width_mobile": "fit-content",
-                    "custom_css": "/* Button styling */\nbackground-color: #17132F;\ncolor: #FFD15C;\nborder: none;\nborder-radius: 10px;\npadding: 5px 20px;\nmin-height: 60px;\nfont-family: 'Fredoka', sans-serif;\nfont-size: 20px;\nfont-weight: 600;\nletter-spacing: 0.2px;\n\ndisplay: inline-flex;\nalign-items: center;\njustify-content: center;\ngap: 12px;\n\nposition: relative;\noverflow: hidden;\nisolation: isolate;\n\n/* Color sweep */\n&::before {\n  content: \"\";\n  position: absolute;\n  inset: 0;\n  background-color: #ffd15c;\n  transform: scaleX(0);\n  transform-origin: left;\n  transition: transform 0.4s ease;\n  border-radius: inherit;\n  z-index: -1;\n}\n\n/* Arrow */\n&::after {\n  content: \"→\";\n  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n  width: auto;\n  height: auto;\n  flex-shrink: 0;\n  background: transparent;\n  color: #17132F;\n  font-size: 20px;\n  line-height: 1;\n  position: relative;\n  top: -2px;\n  transition: transform 0.25s ease, color 0.25s ease;\n}\n\n/* Hover */\n&:hover {\n  color: #17132f;\n\n  &::before {\n    transform: scaleX(1);\n  }\n\n  &::after {\n    color: #FFD15C;\n    transform: translateX(3px);\n  }\n}",
+                    "custom_css": "",
                     "show_arrow": false,
                     "custom_width_mobile": 100
                   },
@@ -359,48 +302,191 @@
                 }
               },
               "block_order": [
-                "text_PbTKDj",
-                "text_iTVPyi",
-                "button_WzpYy7"
+                "text_y7ftMz",
+                "text_EFjUM4",
+                "button_Ew7mMw"
               ]
             }
           },
           "block_order": [
-            "spacer_G4f3UW",
-            "group_WW4cjJ"
+            "group_cHYJX3"
+          ]
+        },
+        "slide_DtcXe8": {
+          "type": "_slide",
+          "settings": {
+            "media_type_1": "image",
+            "image_1": "shopify://shop_images/small-pet-food-habitat-right-aligned.png",
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "center",
+            "gap": 12,
+            "background_color": "",
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
+            "gradient_direction": "to top",
+            "padding-block-start": 48,
+            "padding-block-end": 48,
+            "padding-inline-start": 48,
+            "padding-inline-end": 48
+          },
+          "blocks": {
+            "group_wVCdCa": {
+              "type": "group",
+              "name": "t:names.group",
+              "settings": {
+                "content_direction": "column",
+                "vertical_on_mobile": true,
+                "horizontal_alignment": "flex-start",
+                "vertical_alignment": "center",
+                "align_baseline": false,
+                "horizontal_alignment_flex_direction_column": "flex-start",
+                "vertical_alignment_flex_direction_column": "center",
+                "gap": 12,
+                "width": "fill",
+                "custom_width": 100,
+                "width_mobile": "fill",
+                "custom_width_mobile": 100,
+                "height": "fit",
+                "custom_height": 100,
+                "background_media": "none",
+                "background_color": "",
+                "video_position": "cover",
+                "background_image_position": "cover",
+                "toggle_overlay": false,
+                "overlay_color": "#00000026",
+                "overlay_style": "solid",
+                "gradient_direction": "to top",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_color": "",
+                "border_radius": 0,
+                "link": "",
+                "open_in_new_tab": false,
+                "placeholder": "",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 40,
+                "padding-inline-end": 0,
+                "custom_css": "/* Mobile adjustments */\n@media screen and (max-width: 749px) {\n  margin-top: -100px;\n  padding-left: 10px;\n}"
+              },
+              "blocks": {
+                "text_hmwnPd": {
+                  "type": "text",
+                  "name": "t:names.heading",
+                  "settings": {
+                    "text": "<p>SMALL BUT MIGHTY</p>",
+                    "width": "fit-content",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "custom",
+                    "font": "var(--font-heading--family)",
+                    "font_size": "3rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "text_color": "{{ settings.color_palette.foreground }}",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0,
+                    "custom_css": ""
+                  },
+                  "blocks": {}
+                },
+                "text_LFYVPn": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Discover the bestsellers that have captured the hearts of our customers with their perfect blend of functionality and style.</p>",
+                    "width": "fit-content",
+                    "max_width": "normal",
+                    "alignment": "left",
+                    "type_preset": "rte",
+                    "font": "var(--font-body--family)",
+                    "font_size": "1rem",
+                    "line_height": "normal",
+                    "letter_spacing": "normal",
+                    "case": "none",
+                    "wrap": "pretty",
+                    "text_color": "",
+                    "background": false,
+                    "background_color": "#00000026",
+                    "corner_radius": 0,
+                    "padding-block-start": 0,
+                    "padding-block-end": 20,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0,
+                    "custom_css": ""
+                  },
+                  "blocks": {}
+                },
+                "button_n4PhHq": {
+                  "type": "button",
+                  "settings": {
+                    "label": "Shop Small Pets",
+                    "link": "shopify://collections/small-pets",
+                    "open_in_new_tab": false,
+                    "style_class": "button-custom",
+                    "custom_button_background": "{{ settings.color_palette.color1 }}",
+                    "custom_button_text": "{{ settings.color_palette.background }}",
+                    "custom_button_border": "rgba(0,0,0,0)",
+                    "link_text_color": "",
+                    "width": "fit-content",
+                    "custom_width": 100,
+                    "width_mobile": "fit-content",
+                    "custom_css": "",
+                    "show_arrow": false,
+                    "custom_width_mobile": 100
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "text_hmwnPd",
+                "text_LFYVPn",
+                "button_n4PhHq"
+              ]
+            }
+          },
+          "block_order": [
+            "group_wVCdCa"
           ]
         }
       },
       "block_order": [
-        "group_8QthDC",
-        "group_DcQGGg"
+        "slide_wgQh3C",
+        "slide_tefzj7",
+        "slide_DtcXe8"
       ],
-      "name": "t:names.split_showcase",
+      "name": "t:names.slideshow_full_frame",
       "settings": {
-        "content_direction": "row",
-        "vertical_on_mobile": true,
-        "horizontal_alignment": "flex-start",
-        "vertical_alignment": "center",
-        "align_baseline": false,
-        "horizontal_alignment_flex_direction_column": "flex-start",
-        "vertical_alignment_flex_direction_column": "center",
-        "gap": 0,
+        "display_mode": "full_frame",
         "section_width": "full-width",
-        "section_height": "large",
-        "section_height_custom": 50,
-        "background_media": "none",
+        "full_frame_on_mobile": false,
+        "slideshow_gap": 12,
+        "corner_radius": 0,
+        "slide_height": "large",
+        "content_position": "on-media",
         "background_color": "",
-        "video_position": "cover",
-        "background_image_position": "cover",
-        "toggle_overlay": false,
-        "overlay_color": "#00000026",
-        "overlay_style": "solid",
-        "gradient_direction": "to top",
-        "border": "none",
-        "border_width": 1,
-        "border_opacity": 100,
-        "border_color": "",
-        "border_radius": 0,
+        "mobile_custom_height": true,
+        "mobile_media_height": 600,
+        "icons_style": "arrow",
+        "icons_shape": "circle",
+        "slideshow_controls_style": "dots",
+        "autoplay": true,
+        "autoplay_speed": 4,
+        "zoom_out_effect": true,
+        "zoom_out_duration": 8,
         "padding-block-start": 0,
         "padding-block-end": 0
       }
@@ -422,7 +508,7 @@
             "border_width": 0,
             "border_opacity": 100,
             "border_color": "",
-            "border_radius": 10
+            "border_radius": 3
           },
           "blocks": {
             "collection_title_8gtFDT": {
@@ -439,9 +525,9 @@
                 "letter_spacing": "normal",
                 "case": "none",
                 "wrap": "pretty",
-                "background": true,
-                "background_color": "#FFF8F0",
-                "text_color": "{{ settings.color_palette.foreground }}",
+                "background": false,
+                "background_color": "rgba(0,0,0,0)",
+                "text_color": "{{ settings.color_palette.background }}",
                 "corner_radius": 5,
                 "padding-block-start": 4,
                 "padding-block-end": 4,
@@ -458,7 +544,7 @@
                 "image_ratio": "adapt",
                 "toggle_overlay": true,
                 "overlay_color": "#00000026",
-                "overlay_style": "solid",
+                "overlay_style": "gradient",
                 "gradient_direction": "to top",
                 "border": "none",
                 "border_width": 1,
@@ -482,8 +568,8 @@
           "small-pets",
           "reptiles"
         ],
-        "layout_type": "bento",
-        "carousel_on_mobile": false,
+        "layout_type": "grid",
+        "carousel_on_mobile": true,
         "columns": 4,
         "mobile_columns": "2",
         "mobile_card_size": "60cqw",
@@ -492,87 +578,12 @@
         "rows_gap": 8,
         "max_collections": 4,
         "icons_style": "arrow",
-        "icons_shape": "none",
-        "section_width": "page-width",
+        "icons_shape": "circle",
+        "section_width": "full-width",
         "gap": 12,
-        "background_color": "",
+        "background_color": "{{ settings.color_palette.background }}",
         "padding-block-start": 100,
-        "padding-block-end": 100
-      }
-    },
-    "zuppi_categories": {
-      "type": "zuppi-home-feature",
-      "blocks": {
-        "pet_1": {
-          "type": "category",
-          "settings": {
-            "collection": "dogs",
-            "title": "Dogs",
-            "description": "Food, toys and everyday gear.",
-            "image": "{{ block.settings.collection.image }}"
-          }
-        },
-        "pet_2": {
-          "type": "category",
-          "settings": {
-            "collection": "cats",
-            "title": "Cats",
-            "description": "From mealtime to playtime.",
-            "image": "{{ block.settings.collection.image }}"
-          }
-        },
-        "pet_3": {
-          "type": "category",
-          "settings": {
-            "collection": "fish",
-            "title": "Fish",
-            "description": "Food and aquarium essentials.",
-            "image": "{{ block.settings.collection.image }}"
-          }
-        },
-        "pet_4": {
-          "type": "category",
-          "settings": {
-            "collection": "birds",
-            "title": "Birds",
-            "description": "Food, perches and play.",
-            "image": "{{ block.settings.collection.image }}"
-          }
-        },
-        "pet_5": {
-          "type": "category",
-          "settings": {
-            "collection": "small-pets",
-            "title": "Small Pets",
-            "description": "Food, bedding and habitats.",
-            "image": "{{ block.settings.collection.image }}"
-          }
-        },
-        "pet_6": {
-          "type": "category",
-          "settings": {
-            "collection": "reptiles",
-            "title": "Reptiles",
-            "description": "Food, lighting and habitats.",
-            "image": "{{ block.settings.collection.image }}"
-          }
-        }
-      },
-      "block_order": [
-        "pet_1",
-        "pet_2",
-        "pet_3",
-        "pet_4",
-        "pet_5",
-        "pet_6"
-      ],
-      "disabled": true,
-      "settings": {
-        "presentation": "categories",
-        "heading": "Shop by pet",
-        "description": "",
-        "label": "",
-        "link": ""
+        "padding-block-end": 0
       }
     },
     "media_with_content_xz4HGA": {
@@ -623,7 +634,8 @@
                 "padding-block-start": 0,
                 "padding-block-end": 0,
                 "padding-inline-start": 0,
-                "padding-inline-end": 0
+                "padding-inline-end": 0,
+                "custom_css": ""
               },
               "blocks": {}
             },
@@ -663,7 +675,8 @@
                 "padding-block-start": 0,
                 "padding-block-end": 0,
                 "padding-inline-start": 0,
-                "padding-inline-end": 0
+                "padding-inline-end": 0,
+                "custom_css": ""
               },
               "blocks": {
                 "text_qcfBPy": {
@@ -688,7 +701,8 @@
                     "padding-block-start": 0,
                     "padding-block-end": 0,
                     "padding-inline-start": 0,
-                    "padding-inline-end": 0
+                    "padding-inline-end": 0,
+                    "custom_css": ""
                   },
                   "blocks": {}
                 },
@@ -713,7 +727,8 @@
                     "padding-block-start": 0,
                     "padding-block-end": 0,
                     "padding-inline-start": 0,
-                    "padding-inline-end": 0
+                    "padding-inline-end": 0,
+                    "custom_css": ""
                   },
                   "blocks": {}
                 }
@@ -751,6 +766,7 @@
           ]
         }
       },
+      "disabled": true,
       "name": "t:names.editorial",
       "settings": {
         "media_position": "right",
@@ -1494,9 +1510,8 @@
     }
   },
   "order": [
-    "section_tGE84z",
+    "slideshow_hbqVga",
     "collection_list_bLWPBg",
-    "zuppi_categories",
     "media_with_content_xz4HGA",
     "product_list_y98WkN",
     "product_list_tTjiaj",

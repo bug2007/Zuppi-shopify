@@ -1,4 +1,20 @@
-
+{%- if block.settings.custom_css != blank -%}
+  {%- comment -%}
+    Scoped custom CSS. The style tag sits right before the block's markup and the
+    selector targets the next element (skipping one style tag, in case the snippet
+    outputs one first). Rules are wrapped in native CSS nesting, so bare
+    declarations apply to the block itself and nested selectors and @media
+    queries work as written.
+  {%- endcomment -%}
+  <style data-block-css="{{ block.id }}">
+    :is(
+      style[data-block-css="{{ block.id }}"] + *:not(style),
+      style[data-block-css="{{ block.id }}"] + style + *
+    ) {
+      {{ block.settings.custom_css }}
+    }
+  </style>
+{%- endif -%}
 
 {% render 'text', block: block %}
 
@@ -128,18 +144,6 @@
         {
           "value": "var(--font-accent--family)",
           "label": "Accent"
-        },
-        {
-          "value": "'Fredoka', sans-serif",
-          "label": "Fredoka"
-        },
-        {
-          "value": "'Arial', sans-serif",
-          "label": "Arial"
-        },
-        {
-          "value": "'Georgia', serif",
-          "label": "Georgia"
         }
       ],
       "default": "var(--font-body--family)",
@@ -378,6 +382,16 @@
       "step": 1,
       "unit": "px",
       "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Custom CSS"
+    },
+    {
+      "type": "textarea",
+      "id": "custom_css",
+      "label": "Custom CSS",
+      "info": "Applies only to this block. Plain declarations style the block itself; use nested selectors (e.g. p { }, strong { }) and @media queries for inner elements and screen sizes."
     }
   ],
   "presets": [

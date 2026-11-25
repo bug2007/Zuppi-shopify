@@ -120,6 +120,16 @@
     }
   }
 
+  /* Smooth collection image zoom on hover */
+  .collection-card__image .resource-image__image {
+    transition: transform 0.6s ease;
+    transform: scale(1);
+  }
+
+  .collection-card:hover .collection-card__image .resource-image__image {
+    transform: scale(1.08);
+  }
+
   /* allow all blocks to be selectable in editor preview */
   .shopify-design-mode .collection-card__content * {
     pointer-events: auto;

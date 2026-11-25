@@ -1,5 +1,3 @@
-
-
 {% assign block_settings = block.settings %}
 {%- assign block_index = section.blocks | find_index: 'id', block.id -%}
 {%- assign section_index = section.index -%}
@@ -68,11 +66,34 @@
       -%}
 
       {%- if block_settings.media_type_1 == 'image' -%}
-        {{
-          block_settings.image_1
-          | image_url: width: 3840
-          | image_tag: height: height, sizes: sizes, widths: widths, class: 'slide__image', loading: loading, fetchpriority: fetchpriority
-        }}
+        {%- capture desktop_image -%}
+          {{
+            block_settings.image_1
+            | image_url: width: 3840
+            | image_tag: height: height, sizes: sizes, widths: widths, class: 'slide__image', loading: loading, fetchpriority: fetchpriority
+          }}
+        {%- endcapture -%}
+
+        {%- if block_settings.image_mobile != blank -%}
+          {%- assign mobile_image = block_settings.image_mobile -%}
+          <picture class="slide__picture">
+            <source
+              media="(max-width: 749px)"
+              srcset="
+                {{ mobile_image | image_url: width: 550 }} 550w,
+                {{ mobile_image | image_url: width: 750 }} 750w,
+                {{ mobile_image | image_url: width: 1100 }} 1100w,
+                {{ mobile_image | image_url: width: 1500 }} 1500w
+              "
+              sizes="100vw"
+              width="{{ mobile_image.width }}"
+              height="{{ mobile_image.height }}"
+            >
+            {{ desktop_image }}
+          </picture>
+        {%- else -%}
+          {{ desktop_image }}
+        {%- endif -%}
       {%- else -%}
         {%- if block_settings.video_1.preview_image -%}
 
@@ -162,7 +183,13 @@
     position: absolute;
   }
 
+  /* The picture wrapper takes no box, so its image lays out like a direct child */
+  .slide__image-container > .slide__picture {
+    display: contents;
+  }
+
   .slide__image-container > .slide__image,
+  .slide__image-container > .slide__picture > .slide__image,
   .slide__image-container > .slide__video,
   .slide__image-container > .slide__video-poster {
     position: relative;
@@ -245,6 +272,13 @@
       "type": "image_picker",
       "id": "image_1",
       "label": "t:settings.image",
+      "visible_if": "{{ block.settings.media_type_1 == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Mobile image (optional)",
+      "info": "Shown on screens below 750px. Portrait images (e.g. 4:5 or 9:16) work best.",
       "visible_if": "{{ block.settings.media_type_1 == 'image' }}"
     },
     {

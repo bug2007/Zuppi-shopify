@@ -1,5 +1,3 @@
-
-
 {% if section.blocks.size > 1 %}
   {% if section.settings.display_mode == 'full_frame' %}
     {% assign autoplay = section.settings.autoplay %}
@@ -39,6 +37,9 @@
   if section.blocks.size == 1
     assign slideshow_class = slideshow_class | append: ' slideshow--single-media'
   endif
+  if section.settings.display_mode == 'full_frame' and section.settings.zoom_out_effect
+    assign slideshow_class = slideshow_class | append: ' slideshow--zoom-out'
+  endif
   if section.settings.display_mode == 'with_hints'
     assign slideshow_class = slideshow_class | append: ' slideshow--with-hints'
     if section.settings.full_frame_on_mobile
@@ -71,12 +72,23 @@
   endif
 %}
 
+{%- if section.settings.mobile_custom_height -%}
+  <style>
+    @media screen and (max-width: 749px) {
+      #shopify-section-{{ section.id }} slideshow-slide,
+      #shopify-section-{{ section.id }} .slide__image-container {
+        min-height: {{ section.settings.mobile_media_height }}px;
+      }
+    }
+  </style>
+{%- endif -%}
+
 <div
   class="section-background{% if section.settings.background_color != blank %} color-custom-{{ section.id }}{% endif %}"
 ></div>
 <div
   class="slideshow-section spacing-style section {{ section_width_class }}{% if section.settings.background_color != blank %} color-custom-{{ section.id }}{% endif %} disable-section-top-offset"
-  style="{% render 'spacing-padding', settings: section.settings %}; --slideshow-gap: {{ section.settings.slideshow_gap }}px;{% if rounded_slide_corners %} --corner-radius: {{ section.settings.corner_radius }}px;{% endif %}"
+  style="{% render 'spacing-padding', settings: section.settings %}; --slideshow-gap: {{ section.settings.slideshow_gap }}px; --slide-zoom-duration: {{ section.settings.zoom_out_duration | default: 8 }}s;{% if rounded_slide_corners %} --corner-radius: {{ section.settings.corner_radius }}px;{% endif %}"
 >
   <h2 class="visually-hidden">{{ 'accessibility.slideshow' | t }}</h2>
   {% render 'slideshow',
@@ -177,6 +189,44 @@
         opacity: 0;
         pointer-events: none;
       }
+    }
+  }
+
+  /*
+   * Zoom-out effect: the image of the visible slide slowly zooms out.
+   * Inactive slides wait at the zoomed-in size, so a slide never jumps while it is on screen.
+   */
+  @keyframes slide-zoom-out {
+    from {
+      transform: scale(1.15);
+    }
+
+    to {
+      transform: scale(1);
+    }
+  }
+
+  @keyframes slide-zoom-hold {
+    from {
+      transform: scale(1);
+    }
+
+    to {
+      transform: scale(1.15);
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .slideshow--zoom-out .slide__image-container > .slide__image,
+    .slideshow--zoom-out .slide__image-container > .slide__picture > .slide__image {
+      transform-origin: center center;
+      will-change: transform;
+      animation: slide-zoom-hold 0.01s linear 1.2s both;
+    }
+
+    .slideshow--zoom-out slideshow-slide[aria-hidden='false'] .slide__image-container > .slide__image,
+    .slideshow--zoom-out slideshow-slide[aria-hidden='false'] .slide__image-container > .slide__picture > .slide__image {
+      animation: slide-zoom-out var(--slide-zoom-duration, 8s) ease-out both;
     }
   }
 {% endstylesheet %}
@@ -304,6 +354,27 @@
     },
     {
       "type": "header",
+      "content": "Mobile"
+    },
+    {
+      "type": "checkbox",
+      "id": "mobile_custom_height",
+      "label": "Custom media height on mobile",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "mobile_media_height",
+      "label": "Mobile media height",
+      "min": 250,
+      "max": 900,
+      "step": 10,
+      "unit": "px",
+      "default": 600,
+      "visible_if": "{{ section.settings.mobile_custom_height }}"
+    },
+    {
+      "type": "header",
       "content": "t:content.navigation"
     },
     {
@@ -392,6 +463,24 @@
       "unit": "s",
       "default": 4,
       "visible_if": "{{ section.settings.display_mode == 'full_frame' and section.settings.autoplay }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "zoom_out_effect",
+      "label": "t:settings.zoom_out_effect",
+      "default": true,
+      "visible_if": "{{ section.settings.display_mode == 'full_frame' }}"
+    },
+    {
+      "type": "range",
+      "id": "zoom_out_duration",
+      "label": "t:settings.zoom_out_duration",
+      "min": 4,
+      "max": 15,
+      "step": 1,
+      "unit": "s",
+      "default": 8,
+      "visible_if": "{{ section.settings.display_mode == 'full_frame' and section.settings.zoom_out_effect }}"
     },
     {
       "type": "header",
