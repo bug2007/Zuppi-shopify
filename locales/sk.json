@@ -98,6 +98,7 @@
     "link_to_collection": "Kolekcia: {{ title }}"
   },
   "actions": {
+    "quick_view": "Quick view",
     "add_to_cart": "Pridať do košíka",
     "clear_all": "Vymazať všetko",
     "remove": "Odstrániť",
@@ -143,6 +144,12 @@
     "back_to_main_menu": "Späť do hlavnej ponuky"
   },
   "content": {
+    "sale_ends_in": "Ends in",
+    "sale_days": "Days",
+    "sale_hours": "Hours",
+    "sale_minutes": "Minutes",
+    "sale_seconds": "Seconds",
+    "sale_percent_off": "{{ percent }}% off",
     "reviews": "recenz.",
     "no_results_found": "Nenašli sa žiadne výsledky",
     "language": "Jazyk",

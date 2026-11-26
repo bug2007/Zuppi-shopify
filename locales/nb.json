@@ -96,6 +96,7 @@
     "link_to_collection": "Samling: {{ title }}"
   },
   "actions": {
+    "quick_view": "Quick view",
     "add_to_cart": "Legg i handlekurv",
     "clear_all": "Fjern alle",
     "remove": "Fjern",
@@ -139,6 +140,12 @@
     "zoom_media": "Zoom medier {{ index }}"
   },
   "content": {
+    "sale_ends_in": "Ends in",
+    "sale_days": "Days",
+    "sale_hours": "Hours",
+    "sale_minutes": "Minutes",
+    "sale_seconds": "Seconds",
+    "sale_percent_off": "{{ percent }}% off",
     "reviews": "anmeldelser",
     "no_results_found": "Fant ingen resultater",
     "language": "Språk",

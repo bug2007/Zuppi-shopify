@@ -96,6 +96,7 @@
     "link_to_collection": "Produktserie: {{ title }}"
   },
   "actions": {
+    "quick_view": "Quick view",
     "add_to_cart": "Lägg till i varukorgen",
     "clear_all": "Rensa alla",
     "remove": "Ta bort",
@@ -139,6 +140,12 @@
     "zoom_media": "Zooma media {{ index }}"
   },
   "content": {
+    "sale_ends_in": "Ends in",
+    "sale_days": "Days",
+    "sale_hours": "Hours",
+    "sale_minutes": "Minutes",
+    "sale_seconds": "Seconds",
+    "sale_percent_off": "{{ percent }}% off",
     "reviews": "recensioner",
     "language": "Språk",
     "localization_region_and_language": "Region och språk",

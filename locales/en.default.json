@@ -82,6 +82,7 @@
     // Quick add button on product cards, shortened version of add to cart
     "add": "Add",
     "add_to_cart": "Add to cart",
+    "quick_view": "Quick view",
     // Success message shown after adding item to cart
     "added": "Added",
     // Button to apply discount code to cart
@@ -174,6 +175,12 @@
     }
   },
   "content": {
+    "sale_ends_in": "Ends in",
+    "sale_days": "Days",
+    "sale_hours": "Hours",
+    "sale_minutes": "Minutes",
+    "sale_seconds": "Seconds",
+    "sale_percent_off": "{{ percent }}% off",
     "cancel": "Cancel",
     "discount": "Discount",
     "account_title": "Account",

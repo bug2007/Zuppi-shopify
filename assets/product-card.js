@@ -198,7 +198,10 @@ export class ProductCard extends ProductCardLink {
     this.#handleQuickAdd();
 
     this.addEventListener(StandardEvents.productSelect, this.#handleProductSelect);
-    this.addEventListener(SlideshowSelectEvent.eventName, this.#handleSlideshowSelect);
+    this.addEventListener(
+      SlideshowSelectEvent.eventName,
+      /** @type {EventListener} */ (this.#handleSlideshowSelect)
+    );
     mediaQueryLarge.addEventListener('change', this.#handleQuickAdd);
 
     this.addEventListener('click', this.navigateToProduct);
@@ -484,6 +487,7 @@ export class ProductCard extends ProductCardLink {
     if (!slideshow) return;
 
     this.resetVariant.cancel();
+    this.#fadeFromCurrentImage();
 
     if (this.#previousSlideIndex != null && this.#previousSlideIndex > 0) {
       slideshow.select(this.#previousSlideIndex, undefined, { animate: false });
@@ -502,12 +506,55 @@ export class ProductCard extends ProductCardLink {
 
     const { slideshow } = this.refs;
 
+    this.#fadeFromCurrentImage();
+
     if (!this.variantPicker) {
       if (!slideshow) return;
       slideshow.previous(undefined, { animate: false });
     } else {
       this.#resetVariant();
     }
+  }
+
+  /**
+   * Softens the hover image swap: a copy of the image on screen is laid over the gallery
+   * and faded out, which reveals the next image underneath.
+   */
+  #fadeFromCurrentImage() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const { slideshow } = this.refs;
+    const gallery = slideshow?.closest('.card-gallery');
+    const image = slideshow?.slides?.[slideshow.current]?.querySelector('img');
+    if (!(gallery instanceof HTMLElement) || !image) return;
+
+    gallery.querySelector(':scope > .card-gallery__fade')?.remove();
+
+    const galleryRect = gallery.getBoundingClientRect();
+    const imageRect = image.getBoundingClientRect();
+    const { objectFit, objectPosition } = getComputedStyle(image);
+
+    const copy = document.createElement('img');
+    copy.className = 'card-gallery__fade';
+    copy.src = image.currentSrc || image.src;
+    copy.alt = '';
+    Object.assign(copy.style, {
+      position: 'absolute',
+      left: `${imageRect.left - galleryRect.left - gallery.clientLeft}px`,
+      top: `${imageRect.top - galleryRect.top - gallery.clientTop}px`,
+      width: `${imageRect.width}px`,
+      height: `${imageRect.height}px`,
+      maxWidth: 'none',
+      objectFit,
+      objectPosition,
+      zIndex: '1',
+      pointerEvents: 'none',
+    });
+    gallery.append(copy);
+
+    const fade = copy.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 700, easing: 'ease-in-out' });
+    fade.onfinish = () => copy.remove();
+    fade.oncancel = () => copy.remove();
   }
 
   /**

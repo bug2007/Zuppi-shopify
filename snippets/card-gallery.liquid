@@ -1,3 +1,4 @@
+
 {%- doc -%}
   Displays product images in a carousel.
   Settings allow for a full slideshow, showing only the first image, or showing the second image when hovering.
@@ -192,8 +193,9 @@
           # Arrows can only reach slides that are rendered visible. Variant images past
           # the featured media are hidden, so a product whose only extra media are
           # variant images has a single navigable slide and would get inert arrows.
-          if product.media.size > 2 and visible_slide_count > 1
-            assign show_arrows = true
+          assign show_pager = false
+          if settings.product_card_carousel and visible_slide_count > 1
+            assign show_pager = true
           endif
 
           assign slideshow_attributes = 'data-generic-media-size="[generic_media_size]"' | replace: '[generic_media_size]', generic_media_size
@@ -201,12 +203,27 @@
             assign slideshow_attributes = slideshow_attributes | append: ' disabled="true"'
           endif
         %}
+        {% assign pager = '' %}
+        {% if show_pager %}
+          {% capture pager %}
+            {% render 'slideshow-controls',
+              style: 'counter',
+              item_count: visible_slide_count,
+              show_arrows: true,
+              arrows_on_media: false,
+              controls_on_media: false,
+              icon_style: 'chevron',
+              class: 'card-gallery__pager'
+            %}
+          {% endcapture %}
+        {% endif %}
         {% render 'slideshow',
           ref: 'slideshow',
           initial_slide: 0,
           slides: slides,
           slide_count: media_list_to_show.size,
-          show_arrows: show_arrows,
+          show_arrows: false,
+          controls: pager,
           attributes: slideshow_attributes
         %}
       {%- endif -%}
@@ -434,6 +451,107 @@
     display: block;
   }
 
+  /* Responsive image counter pill */
+  .card-gallery slideshow-controls.card-gallery__pager {
+    position: absolute;
+    inset-block-end: 8px;
+    inset-inline-end: 8px;
+    z-index: var(--layer-raised);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: fit-content;
+    min-width: 0;
+    min-height: 0;
+    height: clamp(20px, 2vw, 28px);
+
+    gap: 2px;
+    margin: 0;
+    padding: 0 clamp(4px, 0.5vw, 6px);
+
+    border-radius: 40px;
+    background: #c4c3c3ff;
+    color: #2b261f;
+
+    font-size: clamp(11px, 0.9vw, 14px);
+    line-height: 1;
+
+    opacity: 0;
+    transition: opacity var(--animation-speed) var(--animation-easing);
+  }
+
+  product-card:is(:hover, :focus-within) .card-gallery slideshow-controls.card-gallery__pager {
+    opacity: 1;
+  }
+
+  .card-gallery__pager .slideshow-controls__arrows {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    height: 100%;
+  }
+
+  .card-gallery__pager .slideshow-control {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: clamp(14px, 1.4vw, 22px);
+    min-width: 0;
+    height: 100%;
+    min-height: 0;
+
+    padding: 0;
+    color: inherit;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  .card-gallery__pager .slideshow-control .svg-wrapper,
+  .card-gallery__pager .slideshow-control svg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: clamp(9px, 0.9vw, 12px);
+    height: clamp(9px, 0.9vw, 12px);
+  }
+
+  .card-gallery__pager .icon-caret {
+    rotate: -90deg;
+  }
+
+  .card-gallery__pager .slideshow-controls__counter {
+    display: flex;
+    align-items: center;
+
+    gap: 2px;
+    margin: 0;
+
+    white-space: nowrap;
+    color: inherit;
+    background: transparent;
+
+    font-size: clamp(11px, 0.9vw, 14px);
+    line-height: 1;
+  }
+
+  slideshow-component[disabled='true'] .card-gallery__pager,
+  [product-grid-view='zoom-out'] .card-gallery .card-gallery__pager {
+    display: none;
+  }
+
+  @media (hover: none) {
+    .card-gallery slideshow-controls.card-gallery__pager {
+      display: none;
+    }
+  }
+
   .card-gallery slideshow-arrows .slideshow-control {
     /* Align icons with quick-add button */
     padding-inline: var(--padding-xl);
@@ -447,10 +565,7 @@
     }
   }
 
-  /*
-   * Card galleries preview the next or previous images on 'pointerenter', so we
-   * try to kick load them beforehand (they are lazy loaded otherwise).
-   */
+ 
   .card-gallery
     :is(
       slideshow-slide:has(+ slideshow-slide[aria-hidden='false']),

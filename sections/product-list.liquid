@@ -5,8 +5,54 @@
   if section.settings.background_color != blank
     render 'contrast-override', background_color: section.settings.background_color, section_id: section.id
   endif
+
+  # Sale carousel options only apply to the carousel layout
+  assign is_carousel = false
+  if section.settings.layout_type == 'carousel'
+    assign is_carousel = true
+  endif
+
+  assign show_panel = false
+  assign show_countdown = false
+  assign show_progress = false
+  assign autoplay_seconds = 0
+  assign sale_ended = false
+  assign end_epoch = 0
+
+  if is_carousel
+    assign show_panel = section.settings.show_sale_panel
+    assign show_progress = section.settings.show_carousel_progress
+    if section.settings.autoplay_carousel
+      assign autoplay_seconds = section.settings.autoplay_carousel_speed
+    endif
+
+    if section.settings.show_countdown and section.settings.countdown_end != blank
+      # An unreadable date does not convert to a timestamp, so the countdown stays off
+      assign end_epoch = section.settings.countdown_end | date: '%s' | plus: 0
+      if end_epoch > 1000000000
+        assign now_epoch = 'now' | date: '%s' | plus: 0
+        if end_epoch > now_epoch
+          assign show_countdown = true
+        else
+          assign sale_ended = true
+        endif
+      endif
+    endif
+  endif
+
+  assign is_sale_layout = false
+  if show_panel or show_countdown or show_progress or autoplay_seconds > 0
+    assign is_sale_layout = true
+  endif
+
+  # The theme editor keeps showing an ended sale so it can still be edited
+  assign hide_section = false
+  if sale_ended and section.settings.hide_when_sale_ends and request.design_mode == false
+    assign hide_section = true
+  endif
 %}
 
+{% unless hide_section %}
 <div
   class="section-background{% if section.settings.background_color != blank %} color-custom-{{ section.id }}{% endif %}"
 ></div>
@@ -15,7 +61,7 @@
   class="
     section
     section--{{ section.settings.section_width }}
-    {% if request.page_type == 'index' and section.settings.section_width == 'full-width' and section.settings.layout_type == 'carousel' %}section--full-width-margin{% endif %}
+    {% if request.page_type == 'index' and section.settings.section_width == 'full-width' and section.settings.layout_type == 'carousel' and is_sale_layout == false %}section--full-width-margin{% endif %}
     {% if section.settings.background_color != blank %}color-custom-{{ section.id }}{% endif %}
     section-resource-list
     spacing-style
@@ -26,9 +72,11 @@
     {% render 'gap-style', value: section.settings.gap %}
   "
 >
-  <div class="section-resource-list__header">
-    {%- content_for 'block', type: '_product-list-content', id: 'static-header' -%}
-  </div>
+  {% capture header_markup %}
+    <div class="section-resource-list__header">
+      {%- content_for 'block', type: '_product-list-content', id: 'static-header' -%}
+    </div>
+  {% endcapture %}
 
   {% capture list_items %}
     {% if section.settings.collection != blank and shop.products_count != 0 %}
@@ -70,14 +118,135 @@
     assign list_items_array = list_items | strip | split: '<!--@list/split-->'
   %}
 
-  {% render 'resource-list',
-    list_items: list_items,
-    list_items_array: list_items_array,
-    settings: section.settings,
-    slide_count: max_items,
-    content_type: 'products',
-    test_id: 'resource-list-grid'
-  %}
+  {% style %}
+    #shopify-section-{{ section.id }} .section-resource-list {
+      padding-left: {{ section.settings.padding-inline-desktop }}px;
+      padding-right: {{ section.settings.padding-inline-desktop }}px;
+    }
+
+    @media screen and (max-width: 989px) {
+      #shopify-section-{{ section.id }} .section-resource-list {
+        padding-left: {{ section.settings.padding-inline-tablet }}px;
+        padding-right: {{ section.settings.padding-inline-tablet }}px;
+      }
+    }
+
+    @media screen and (max-width: 749px) {
+      #shopify-section-{{ section.id }} .section-resource-list {
+        padding-left: {{ section.settings.padding-inline-mobile }}px;
+        padding-right: {{ section.settings.padding-inline-mobile }}px;
+      }
+    }
+  {% endstyle %}
+
+  {% capture list_markup %}
+    {% render 'resource-list',
+      list_items: list_items,
+      list_items_array: list_items_array,
+      settings: section.settings,
+      slide_count: max_items,
+      content_type: 'products',
+      test_id: 'resource-list-grid'
+    %}
+  {% endcapture %}
+
+  {% if is_sale_layout %}
+    <sale-carousel
+      class="sale-carousel{% if show_panel %} sale-carousel--with-panel{% endif %}{% if show_progress %} sale-carousel--with-progress{% endif %}"
+      data-autoplay="{{ autoplay_seconds }}"
+      data-slide-label="{{ 'accessibility.slide_status' | t: index: '[index]', length: '[length]' | escape }}"
+      data-pause-label="{{ 'accessibility.slideshow_pause' | t | escape }}"
+      data-play-label="{{ 'accessibility.slideshow_play' | t | escape }}"
+      style="
+        --sale-gap: {{ section.settings.columns_gap }}px;
+        --sale-max-columns: {{ section.settings.columns }};
+        --sale-mobile-size: {{ section.settings.mobile_card_size | replace: 'cqw', '%' }};
+      "
+    >
+      <div class="sale-carousel__main">
+        {% if show_countdown and show_panel == false %}
+          {% render 'sale-countdown', end_epoch: end_epoch, hide_when_ended: section.settings.hide_when_sale_ends %}
+        {% endif %}
+
+        <div class="sale-carousel__head">
+          {{ header_markup }}
+
+          {% if show_progress or autoplay_seconds > 0 %}
+            <div
+              class="sale-carousel__nav"
+              ref="nav"
+              hidden
+            >
+              {% if autoplay_seconds > 0 %}
+                <button
+                  type="button"
+                  class="sale-carousel__button sale-carousel__toggle button-unstyled"
+                  aria-label="{{ 'accessibility.slideshow_pause' | t }}"
+                  ref="toggle"
+                  on:click="/toggleAutoplay"
+                >
+                  <span class="svg-wrapper sale-carousel__pause-icon">{{ 'icon-pause.svg' | inline_asset_content }}</span>
+                  <span class="svg-wrapper sale-carousel__play-icon">{{ 'icon-play.svg' | inline_asset_content }}</span>
+                </button>
+              {% endif %}
+              {% if show_progress %}
+                <button
+                  type="button"
+                  class="sale-carousel__button button-unstyled flip-x"
+                  aria-label="{{ 'accessibility.slideshow_previous' | t }}"
+                  on:click="/previous"
+                >
+                  <span class="svg-wrapper">{{ 'icon-arrow.svg' | inline_asset_content }}</span>
+                </button>
+                <span
+                  class="sale-carousel__counter"
+                  ref="counter"
+                ></span>
+                <button
+                  type="button"
+                  class="sale-carousel__button button-unstyled"
+                  aria-label="{{ 'accessibility.slideshow_next' | t }}"
+                  on:click="/next"
+                >
+                  <span class="svg-wrapper">{{ 'icon-arrow.svg' | inline_asset_content }}</span>
+                </button>
+              {% endif %}
+            </div>
+          {% endif %}
+        </div>
+
+        <div class="sale-carousel__row">
+          {% if show_panel %}
+            {% render 'sale-panel',
+              collection: section.settings.collection,
+              show_countdown: show_countdown,
+              end_epoch: end_epoch,
+              hide_when_ended: section.settings.hide_when_sale_ends
+            %}
+          {% endif %}
+          <div class="sale-carousel__products">
+            {{ list_markup }}
+          </div>
+        </div>
+
+        {% if show_progress %}
+          <div
+            class="sale-carousel__bars"
+            ref="bars"
+            hidden
+          ></div>
+        {% endif %}
+      </div>
+    </sale-carousel>
+
+    <script
+      src="{{ 'sale-carousel.js' | asset_url }}"
+      type="module"
+    ></script>
+  {% else %}
+    {{ header_markup }}
+    {{ list_markup }}
+  {% endif %}
 
   <div
     class="section-resource-list__content"
@@ -86,6 +255,184 @@
     {%- content_for 'blocks' -%}
   </div>
 </div>
+{% endunless %}
+
+{% stylesheet %}
+  .sale-carousel {
+    /* The carousel sits beside the panel, so it needs no page-margin gutters of its own */
+    --util-page-margin-offset: 0px;
+
+    display: block;
+    width: 100%;
+  }
+
+  .sale-carousel__row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--gap-md);
+  }
+
+  .sale-carousel__products {
+    min-width: 0;
+  }
+
+  /* On phones the panel sits above the products at the same width as a product card */
+  .sale-carousel__row > .sale-panel {
+    width: var(--sale-mobile-size, 60%);
+    min-width: 150px;
+  }
+
+  .sale-carousel__main {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-md);
+    min-width: 0;
+  }
+
+  .sale-carousel__head {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--gap-sm);
+  }
+
+  .sale-carousel__head > .section-resource-list__header {
+    flex: 1 1 240px;
+    min-width: 0;
+  }
+
+  .sale-carousel__nav {
+    display: flex;
+    align-items: center;
+    margin-inline-start: auto;
+    border: 1px solid rgb(var(--color-foreground-rgb) / var(--opacity-20));
+    border-radius: 50px;
+  }
+
+  .sale-carousel__nav[hidden],
+  .sale-carousel__bars[hidden] {
+    display: none;
+  }
+
+  .sale-carousel__nav .sale-carousel__button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+  .sale-carousel__button .svg-wrapper,
+  .sale-carousel__button svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .sale-carousel__toggle .sale-carousel__play-icon,
+  sale-carousel[paused] .sale-carousel__toggle .sale-carousel__pause-icon {
+    display: none;
+  }
+
+  sale-carousel[paused] .sale-carousel__toggle .sale-carousel__play-icon {
+    display: flex;
+  }
+
+  .sale-carousel__counter {
+    padding-inline: var(--padding-xs);
+    font-size: var(--font-size--xs);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  /* The counter arrows replace the arrows over the products */
+  .sale-carousel--with-progress slideshow-arrows {
+    display: none;
+  }
+
+  .sale-carousel__bars {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    column-gap: 6px;
+  }
+
+  .sale-carousel__bar {
+    display: flex;
+    align-items: center;
+    width: 20px;
+    height: 24px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .sale-carousel__bar::after {
+    content: '';
+    width: 100%;
+    height: 3px;
+    border-radius: 3px;
+    background: rgb(var(--color-foreground-rgb) / var(--opacity-20));
+  }
+
+  .sale-carousel__bar[aria-current='true'] {
+    width: 40px;
+  }
+
+  .sale-carousel__bar[aria-current='true']::after {
+    background: var(--color-primary-button-background);
+  }
+
+  /*
+   * From tablet up the panel takes the space of one product card. The row is shared by the panel
+   * and the visible cards, so both get the same width. Narrower screens show fewer cards.
+   */
+  @media screen and (min-width: 750px) {
+    .sale-carousel--with-panel {
+      --sale-columns: min(2, var(--sale-max-columns));
+    }
+
+    .sale-carousel--with-panel .sale-carousel__row {
+      grid-template-columns:
+        calc(
+          (100% - var(--sale-gap) * var(--sale-columns) - var(--peek-next-slide-size)) /
+            (var(--sale-columns) + 1)
+        )
+        minmax(0, 1fr);
+      column-gap: var(--sale-gap);
+    }
+
+    .sale-carousel--with-panel .sale-carousel__row > .sale-panel {
+      width: auto;
+      min-width: 0;
+    }
+
+    .sale-carousel--with-panel .resource-list.resource-list__carousel {
+      --resource-list-column-gap: var(--sale-gap);
+    }
+
+    .sale-carousel--with-panel .resource-list__carousel .resource-list__slide {
+      --slide-width: calc(
+        (100% - var(--sale-gap) * (var(--sale-columns) - 1) - var(--peek-next-slide-size)) / var(--sale-columns)
+      );
+    }
+  }
+
+  @media screen and (min-width: 990px) {
+    .sale-carousel--with-panel {
+      --sale-columns: min(3, var(--sale-max-columns));
+    }
+  }
+
+  @media screen and (min-width: 1200px) {
+    .sale-carousel--with-panel {
+      --sale-columns: var(--sale-max-columns);
+    }
+  }
+{% endstylesheet %}
 
 {% schema %}
 {
@@ -270,6 +617,80 @@
     },
     {
       "type": "header",
+      "content": "t:content.sale_carousel",
+      "visible_if": "{{ section.settings.layout_type == 'carousel' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sale_panel",
+      "label": "t:settings.show_sale_panel",
+      "default": false,
+      "visible_if": "{{ section.settings.layout_type == 'carousel' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_countdown",
+      "label": "t:settings.show_countdown",
+      "default": false,
+      "visible_if": "{{ section.settings.layout_type == 'carousel' }}"
+    },
+    {
+      "type": "text",
+      "id": "countdown_end",
+      "label": "t:settings.countdown_end",
+      "info": "t:info.countdown_end",
+      "placeholder": "t:settings.countdown_end_placeholder",
+      "visible_if": "{{ section.settings.layout_type == 'carousel' and section.settings.show_countdown }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "hide_when_sale_ends",
+      "label": "t:settings.hide_when_sale_ends",
+      "default": false,
+      "visible_if": "{{ section.settings.layout_type == 'carousel' and section.settings.show_countdown }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sale_ribbon",
+      "label": "t:settings.show_sale_ribbon",
+      "default": false,
+      "visible_if": "{{ section.settings.layout_type == 'carousel' }}"
+    },
+    {
+      "type": "text",
+      "id": "sale_ribbon_text",
+      "label": "t:settings.sale_ribbon_text",
+      "info": "t:info.sale_ribbon_text",
+      "default": "Winter Sale",
+      "visible_if": "{{ section.settings.layout_type == 'carousel' and section.settings.show_sale_ribbon }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay_carousel",
+      "label": "t:settings.auto_rotate_slides",
+      "default": false,
+      "visible_if": "{{ section.settings.layout_type == 'carousel' }}"
+    },
+    {
+      "type": "range",
+      "id": "autoplay_carousel_speed",
+      "label": "t:settings.speed",
+      "min": 2,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "default": 4,
+      "visible_if": "{{ section.settings.layout_type == 'carousel' and section.settings.autoplay_carousel }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_carousel_progress",
+      "label": "t:settings.show_carousel_progress",
+      "default": false,
+      "visible_if": "{{ section.settings.layout_type == 'carousel' }}"
+    },
+    {
+      "type": "header",
       "content": "t:content.section_layout"
     },
     {
@@ -347,7 +768,37 @@
       "step": 1,
       "unit": "px",
       "default": 0
-    }
+    },
+  {
+    "type": "range",
+    "id": "padding-inline-desktop",
+    "label": "Desktop left/right padding",
+    "min": 0,
+    "max": 100,
+    "step": 2,
+    "unit": "px",
+    "default": 32
+  },
+  {
+    "type": "range",
+    "id": "padding-inline-tablet",
+    "label": "Tablet left/right padding",
+    "min": 0,
+    "max": 100,
+    "step": 2,
+    "unit": "px",
+    "default": 24
+  },
+  {
+    "type": "range",
+    "id": "padding-inline-mobile",
+    "label": "Mobile left/right padding",
+    "min": 0,
+    "max": 100,
+    "step": 2,
+    "unit": "px",
+    "default": 16
+}
   ],
   "presets": [
     {

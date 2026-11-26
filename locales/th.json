@@ -96,6 +96,7 @@
     "link_to_collection": "คอลเลกชัน{{ title }}"
   },
   "actions": {
+    "quick_view": "Quick view",
     "add_to_cart": "เพิ่มลงในตะกร้าสินค้า",
     "clear_all": "ล้างทั้งหมด",
     "remove": "ลบออก",
@@ -139,6 +140,12 @@
     "back_to_main_menu": "กลับไปที่เมนูหลัก"
   },
   "content": {
+    "sale_ends_in": "Ends in",
+    "sale_days": "Days",
+    "sale_hours": "Hours",
+    "sale_minutes": "Minutes",
+    "sale_seconds": "Seconds",
+    "sale_percent_off": "{{ percent }}% off",
     "reviews": "รีวิว",
     "language": "ภาษา",
     "localization_region_and_language": "ภูมิภาคและภาษา",

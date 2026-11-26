@@ -98,6 +98,7 @@
     "link_to_collection": "Kolekcija: {{ title }}"
   },
   "actions": {
+    "quick_view": "Quick view",
     "add_to_cart": "Įdėti į krepšelį",
     "clear_all": "Išvalyti viską",
     "remove": "Pašalinti",
@@ -143,6 +144,12 @@
     "back_to_main_menu": "Atgal į pagrindinį meniu"
   },
   "content": {
+    "sale_ends_in": "Ends in",
+    "sale_days": "Days",
+    "sale_hours": "Hours",
+    "sale_minutes": "Minutes",
+    "sale_seconds": "Seconds",
+    "sale_percent_off": "{{ percent }}% off",
     "reviews": "apžvalgos (-ų; -a)",
     "language": "Kalba",
     "localization_region_and_language": "Regionas ir kalba",

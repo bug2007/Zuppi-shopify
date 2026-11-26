@@ -1,3 +1,4 @@
+
 {%- doc -%}
   Product card layout styles. Kept in a standalone snippet so empty filtered grids
   can preload the styles before facets morph product cards into the section.
@@ -57,6 +58,46 @@
 
   .product-card__content slideshow-component {
     --cursor: pointer;
+  }
+
+  /*
+    Cards with a quantity selector.
+    The existing card layout and padding are preserved.
+    Border appearance is now controlled by the Product Card block settings.
+  */
+  .product-card__content.product-grid__card:has(> .card-purchase) {
+    position: relative;
+    border-radius: var(--product-card-border-radius, 0px);
+  }
+
+  /*
+    Hover and keyboard-focus border.
+    Uses inset box-shadow so the hover border does not overwrite
+    the normal border settings or change the card dimensions.
+  */
+  .product-card__content.product-grid__card.has-hover-border:has(> .card-purchase) {
+    transition: box-shadow var(--animation-speed) var(--animation-easing);
+  }
+
+  .product-card:is(:hover, :focus-within)
+    .product-card__content.product-grid__card.has-hover-border:has(> .card-purchase) {
+    box-shadow:
+      inset 0 0 0 var(--product-card-hover-border-width)
+      color-mix(
+        in srgb,
+        var(--product-card-hover-border-color)
+        var(--product-card-hover-border-opacity),
+        transparent
+      );
+  }
+
+  .product-card__content:has(> .card-purchase) .card-gallery {
+    border-radius: 12px;
+  }
+
+  /* The button over the image is replaced by the row below the card details */
+  .product-card__content:has(> .card-purchase) .card-gallery > .quick-add {
+    display: none;
   }
 
   @media screen and (max-width: 749px) {

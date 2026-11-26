@@ -77,6 +77,7 @@
   },
   "actions": {
     "add": "சேர்",
+    "quick_view": "Quick view",
     "add_to_cart": "கார்ட்டில் சேர்",
     "added": "சேர்க்கப்பட்டது",
     "apply": "பயன்படுத்து",
@@ -159,6 +160,12 @@
     }
   },
   "content": {
+    "sale_ends_in": "Ends in",
+    "sale_days": "Days",
+    "sale_hours": "Hours",
+    "sale_minutes": "Minutes",
+    "sale_seconds": "Seconds",
+    "sale_percent_off": "{{ percent }}% off",
     "cancel": "ரத்துசெய்",
     "discount": "தள்ளுபடி",
     "account_title": "கணக்கு",

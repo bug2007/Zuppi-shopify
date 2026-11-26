@@ -78,6 +78,7 @@
   },
   "actions": {
     "add": "Dodaj",
+    "quick_view": "Quick view",
     "add_to_cart": "Dodaj u korpu",
     "added": "Dodato",
     "apply": "Primeni",
@@ -162,6 +163,12 @@
     }
   },
   "content": {
+    "sale_ends_in": "Ends in",
+    "sale_days": "Days",
+    "sale_hours": "Hours",
+    "sale_minutes": "Minutes",
+    "sale_seconds": "Seconds",
+    "sale_percent_off": "{{ percent }}% off",
     "cancel": "Otkaži",
     "discount": "Popust",
     "account_title": "Nalog",

@@ -1,0 +1,112 @@
+{%- doc -%}
+  Renders the promo panel of a sale carousel: the collection image, the collection title and an optional countdown.
+
+  @param {object} collection - The sale collection. May be blank while the section is being set up.
+  @param {boolean} show_countdown - Whether to render the countdown below the title
+  @param {number} end_epoch - The end of the sale as a Unix timestamp in seconds
+  @param {boolean} hide_when_ended - Whether the whole section hides when the countdown reaches zero
+
+  @example
+  {% render 'sale-panel', collection: section.settings.collection, show_countdown: false, end_epoch: 0, hide_when_ended: false %}
+{%- enddoc -%}
+
+{%- liquid
+  assign image = collection.image
+
+  # Sale artwork usually has its headline at the top, so crop from the bottom unless a focal point was chosen
+  assign focal_point = 'center top'
+  if image.presentation.focal_point != blank
+    assign chosen_point = image.presentation.focal_point | append: ''
+    unless chosen_point == '50.0% 50.0%'
+      assign focal_point = chosen_point
+    endunless
+  endif
+-%}
+
+<div class="sale-panel">
+  <a
+    class="sale-panel__media"
+    {% if collection != blank %}
+      href="{{ collection.url }}"
+    {% endif %}
+    aria-label="{{ collection.title | escape }}"
+  >
+    {%- if image != blank -%}
+      {{
+        image
+        | image_url: width: 1200
+        | image_tag:
+          widths: '300, 450, 600, 900, 1200',
+          sizes: '(min-width: 990px) 300px, 100vw',
+          alt: image.alt,
+          loading: 'lazy',
+          style: 'object-position: [point];'
+        | replace: '[point]', focal_point
+      }}
+    {%- else -%}
+      {{ 'collection-1' | placeholder_svg_tag: 'sale-panel__placeholder' }}
+    {%- endif -%}
+  </a>
+
+  <div class="sale-panel__body">
+    {% if collection != blank %}
+      <p class="sale-panel__title h4">{{ collection.title }}</p>
+    {% endif %}
+    {% if show_countdown %}
+      {% render 'sale-countdown', end_epoch: end_epoch, hide_when_ended: hide_when_ended %}
+    {% endif %}
+  </div>
+</div>
+
+{% stylesheet %}
+  .sale-panel {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: 18px;
+    background: var(--color-primary-button-background);
+    color: var(--color-primary-button-text);
+  }
+
+  .sale-panel__media {
+    position: relative;
+    display: block;
+    flex: 1;
+    aspect-ratio: 4 / 5;
+    width: 100%;
+  }
+
+  .sale-panel__media > img,
+  .sale-panel__media > svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .sale-panel__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-xs);
+    padding: var(--padding-sm);
+    container-type: inline-size;
+  }
+
+  .sale-panel__body:empty {
+    display: none;
+  }
+
+  .sale-panel__title.sale-panel__title {
+    margin: 0;
+    color: inherit;
+  }
+
+  /* Beside the cards, the cards set the height and the image fills what the details leave */
+  @media screen and (min-width: 750px) {
+    .sale-panel__media {
+      aspect-ratio: auto;
+      min-height: 0;
+    }
+  }
+{% endstylesheet %}

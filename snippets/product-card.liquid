@@ -97,9 +97,17 @@
       border-style
       gap-style
       {% if block_settings.background_color != blank %} color-custom-{{ block.id }}{% endif %}
+      {% if block_settings.hover_border == 'solid' %} has-hover-border{% endif %}
     "
     style="
       {% render 'border-override', settings: block_settings %}
+      --product-card-border-radius: {{ block_settings.border_radius }}px;
+
+      {% if block_settings.hover_border == 'solid' %}
+        --product-card-hover-border-width: {{ block_settings.hover_border_width }}px;
+        --product-card-hover-border-color: {{ block_settings.hover_border_color | default: 'var(--color-primary-button-background)' }};
+        --product-card-hover-border-opacity: {{ block_settings.hover_border_opacity }}%;
+      {% endif %}
       {% render 'layout-panel-style', settings: block_settings %}
       {% render 'spacing-style', settings: block_settings %}
       {% render 'gap-style', value: product_card_gap_value, name: 'product-card-gap' %}

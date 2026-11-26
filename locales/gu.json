@@ -77,6 +77,7 @@
   },
   "actions": {
     "add": "ઉમેરો",
+    "quick_view": "Quick view",
     "add_to_cart": "કાર્ટમાં ઉમેરો",
     "added": "ઉમેર્યું",
     "apply": "લાગુ કરો",
@@ -159,6 +160,12 @@
     }
   },
   "content": {
+    "sale_ends_in": "Ends in",
+    "sale_days": "Days",
+    "sale_hours": "Hours",
+    "sale_minutes": "Minutes",
+    "sale_seconds": "Seconds",
+    "sale_percent_off": "{{ percent }}% off",
     "cancel": "રદ કરો",
     "discount": "ડિસ્કાઉન્ટ",
     "account_title": "એકાઉન્ટ",

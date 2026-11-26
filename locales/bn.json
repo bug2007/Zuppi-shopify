@@ -77,6 +77,7 @@
   },
   "actions": {
     "add": "যোগ করুন",
+    "quick_view": "Quick view",
     "add_to_cart": "কার্টে যোগ করুন",
     "added": "যোগ করা হয়েছে",
     "apply": "প্রয়োগ করুন",
@@ -159,6 +160,12 @@
     }
   },
   "content": {
+    "sale_ends_in": "Ends in",
+    "sale_days": "Days",
+    "sale_hours": "Hours",
+    "sale_minutes": "Minutes",
+    "sale_seconds": "Seconds",
+    "sale_percent_off": "{{ percent }}% off",
     "cancel": "বাতিল করুন",
     "discount": "ডিসকাউন্ট",
     "account_title": "অ্যাকাউন্ট",

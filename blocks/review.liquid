@@ -13,6 +13,12 @@
     assign scale_max = product.metafields.reviews.rating.value.scale_max | default: 5
     assign rating_count = product.metafields.reviews.rating_count | default: 3
   endif
+
+  if rating == blank and block_settings.show_empty_stars and product != blank
+    assign rating = 0
+    assign scale_max = 5
+    assign rating_count = 0
+  endif
 -%}
 
 {% if block_settings.text_color != blank %}
@@ -107,8 +113,12 @@
           <span class="rating-count-separator">|</span>
         {%- endif -%}
         {%- if block_settings.show_number -%}
-          {{- rating_count }}
-          {{ 'content.reviews' | t }}
+          {%- if block_settings.compact_count -%}
+            ({{- rating_count | default: 0 -}})
+          {%- else -%}
+            {{- rating_count }}
+            {{ 'content.reviews' | t }}
+          {%- endif -%}
         {%- endif -%}
       </p>
     {%- endif -%}
@@ -201,6 +211,19 @@
       "id": "show_number",
       "label": "t:settings.review_count",
       "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "compact_count",
+      "label": "t:settings.compact_review_count",
+      "default": false,
+      "visible_if": "{{ block.settings.show_number }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_empty_stars",
+      "label": "t:settings.show_empty_stars",
+      "default": false
     },
     {
       "type": "color",

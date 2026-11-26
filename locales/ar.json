@@ -81,6 +81,7 @@
   },
   "actions": {
     "add": "إضافة",
+    "quick_view": "Quick view",
     "add_to_cart": "إضافة إلى سلة التسوق",
     "added": "تمت الإضافة",
     "apply": "تطبيق",
@@ -171,6 +172,12 @@
     }
   },
   "content": {
+    "sale_ends_in": "Ends in",
+    "sale_days": "Days",
+    "sale_hours": "Hours",
+    "sale_minutes": "Minutes",
+    "sale_seconds": "Seconds",
+    "sale_percent_off": "{{ percent }}% off",
     "cancel": "إلغاء",
     "discount": "الخصم",
     "account_title": "الحساب",

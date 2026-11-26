@@ -1,5 +1,4 @@
 
-
 {%- doc -%}
   @param {string} [product_view_context] - Context value passed through to the card snippet.
 {%- enddoc -%}
@@ -10,6 +9,9 @@
 
 {% capture children %}
   {% content_for 'blocks', closest.product: product %}
+  {% if block.settings.show_quantity_add and settings.quick_add and product != blank %}
+    {% render 'quick-add', product: product, section_id: section.id, block: block, layout: 'row' %}
+  {% endif %}
 {% endcapture %}
 
 {% render 'product-card', children: children, product: product, product_view_context: product_view_context %}
@@ -80,6 +82,12 @@
       "default": 16
     },
     {
+      "type": "checkbox",
+      "id": "show_quantity_add",
+      "label": "t:settings.show_quantity_add",
+      "default": true
+    },
+    {
       "type": "header",
       "content": "t:content.appearance"
     },
@@ -148,6 +156,56 @@
       "unit": "px",
       "default": 0
     },
+    {
+      "type": "header",
+      "content": "Hover border"
+    },
+    {
+      "type": "select",
+      "id": "hover_border",
+      "label": "Hover border style",
+      "options": [
+        {
+          "value": "none",
+          "label": "None"
+        },
+        {
+          "value": "solid",
+          "label": "Solid"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "range",
+      "id": "hover_border_width",
+      "label": "Hover border thickness",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "unit": "px",
+      "default": 1,
+      "visible_if": "{{ block.settings.hover_border == 'solid' }}"
+    },
+    {
+      "type": "range",
+      "id": "hover_border_opacity",
+      "label": "Hover border opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100,
+      "visible_if": "{{ block.settings.hover_border == 'solid' }}"
+    },
+    {
+      "type": "color",
+      "id": "hover_border_color",
+      "label": "Hover border color",
+      "placeholder": "t:settings.default",
+      "visible_if": "{{ block.settings.hover_border == 'solid' }}"
+    },
+    
     {
       "type": "header",
       "content": "t:content.padding"

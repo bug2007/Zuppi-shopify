@@ -96,6 +96,7 @@
     "link_to_collection": "컬렉션: {{ title }}"
   },
   "actions": {
+    "quick_view": "Quick view",
     "add_to_cart": "카트에 추가",
     "clear_all": "모두 지우기",
     "remove": "제거",
@@ -139,6 +140,12 @@
     "zoom_media": "{{ index }} 미디어 확대/축소"
   },
   "content": {
+    "sale_ends_in": "Ends in",
+    "sale_days": "Days",
+    "sale_hours": "Hours",
+    "sale_minutes": "Minutes",
+    "sale_seconds": "Seconds",
+    "sale_percent_off": "{{ percent }}% off",
     "reviews": "리뷰",
     "language": "언어",
     "localization_region_and_language": "지역 및 언어",

@@ -96,6 +96,7 @@
     "link_to_collection": "Koleksi: {{ title }}"
   },
   "actions": {
+    "quick_view": "Quick view",
     "add_to_cart": "Tambahkan ke keranjang",
     "clear_all": "Bersihkan semua",
     "remove": "Hapus",
@@ -139,6 +140,12 @@
     "zoom_media": "Perbesar media {{ index }}"
   },
   "content": {
+    "sale_ends_in": "Ends in",
+    "sale_days": "Days",
+    "sale_hours": "Hours",
+    "sale_minutes": "Minutes",
+    "sale_seconds": "Seconds",
+    "sale_percent_off": "{{ percent }}% off",
     "reviews": "ulasan",
     "language": "Bahasa",
     "localization_region_and_language": "Wilayah dan bahasa",

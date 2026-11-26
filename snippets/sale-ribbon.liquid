@@ -1,0 +1,75 @@
+{%- doc -%}
+  Renders the ribbon on a product card inside a sale carousel. A product with a real price cut
+  shows its percentage. Any other product shows the merchant's ribbon text while the sale runs.
+  Renders nothing when there is nothing to say.
+
+  @param {object} product - The product on the card
+  @param {string} text - The ribbon text for products without a price cut
+  @param {string} countdown_end - The end date of the sale as typed in the section settings, may be blank
+
+  @example
+  {% render 'sale-ribbon', product: product, text: 'Winter Sale', countdown_end: '' %}
+{%- enddoc -%}
+
+{%- liquid
+  assign variant = product.selected_or_first_available_variant
+  assign label = ''
+  assign timed = false
+
+  if variant.compare_at_price > variant.price
+    assign percent = variant.compare_at_price | minus: variant.price | times: 100.0 | divided_by: variant.compare_at_price | round
+    if percent > 0
+      assign label = 'content.sale_percent_off' | t: percent: percent
+    endif
+  endif
+
+  if label == blank and text != blank
+    assign label = text
+    if countdown_end != blank
+      assign end_epoch = countdown_end | date: '%s' | plus: 0
+      if end_epoch > 1000000000
+        assign timed = true
+        assign now_epoch = 'now' | date: '%s' | plus: 0
+        if end_epoch <= now_epoch
+          assign label = ''
+        endif
+      endif
+    endif
+  endif
+-%}
+
+{%- if label != blank and product.available -%}
+  <span
+    class="sale-ribbon"
+    {% if timed %}
+      data-sale-ribbon-timed
+    {% endif %}
+  >{{ label | escape }}</span>
+{%- endif -%}
+
+{% stylesheet %}
+  .sale-ribbon {
+    position: absolute;
+    inset-block-start: 10px;
+    inset-inline-start: 0;
+    z-index: var(--layer-raised);
+    max-width: calc(100% - 56px);
+    padding: 5px 18px 5px 10px;
+    overflow: hidden;
+    background: var(--color-primary-button-background);
+    clip-path: polygon(0 0, 100% 0, calc(100% - 8px) 50%, 100% 100%, 0 100%);
+    color: var(--color-primary-button-text);
+    font-family: var(--font-accent--family);
+    font-size: var(--font-size--xs);
+    font-weight: var(--font-accent--weight);
+    line-height: 1.4;
+    pointer-events: none;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  [dir='rtl'] .sale-ribbon {
+    padding: 5px 10px 5px 18px;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 8px 50%);
+  }
+{% endstylesheet %}

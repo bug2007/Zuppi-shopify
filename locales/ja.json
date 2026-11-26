@@ -96,6 +96,7 @@
     "link_to_collection": "コレクション：{{ title }}"
   },
   "actions": {
+    "quick_view": "Quick view",
     "add_to_cart": "カートに追加",
     "clear_all": "すべてクリア",
     "remove": "削除",
@@ -139,6 +140,12 @@
     "back_to_main_menu": "メインメニューに戻る"
   },
   "content": {
+    "sale_ends_in": "Ends in",
+    "sale_days": "Days",
+    "sale_hours": "Hours",
+    "sale_minutes": "Minutes",
+    "sale_seconds": "Seconds",
+    "sale_percent_off": "{{ percent }}% off",
     "reviews": "レビュー",
     "language": "言語",
     "localization_region_and_language": "地域と言語",

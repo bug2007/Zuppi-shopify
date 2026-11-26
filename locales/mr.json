@@ -77,6 +77,7 @@
   },
   "actions": {
     "add": "जोडा",
+    "quick_view": "Quick view",
     "add_to_cart": "कार्टमध्ये जोडा",
     "added": "जोडले",
     "apply": "लागू करा",
@@ -159,6 +160,12 @@
     }
   },
   "content": {
+    "sale_ends_in": "Ends in",
+    "sale_days": "Days",
+    "sale_hours": "Hours",
+    "sale_minutes": "Minutes",
+    "sale_seconds": "Seconds",
+    "sale_percent_off": "{{ percent }}% off",
     "cancel": "रद्द करा",
     "discount": "सवलत",
     "account_title": "खाते",

@@ -97,6 +97,7 @@
     "link_to_collection": "Kolekcija: {{ title }}"
   },
   "actions": {
+    "quick_view": "Quick view",
     "add_to_cart": "Dodaj u košaricu",
     "clear_all": "Očisti sve",
     "remove": "Ukloni",
@@ -141,6 +142,12 @@
     "back_to_main_menu": "Natrag na glavni izbornik"
   },
   "content": {
+    "sale_ends_in": "Ends in",
+    "sale_days": "Days",
+    "sale_hours": "Hours",
+    "sale_minutes": "Minutes",
+    "sale_seconds": "Seconds",
+    "sale_percent_off": "{{ percent }}% off",
     "reviews": "recenzije",
     "no_results_found": "Nema pronađenih rezultata",
     "language": "Jezik",

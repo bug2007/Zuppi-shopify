@@ -77,6 +77,7 @@
   },
   "actions": {
     "add": "Engadir",
+    "quick_view": "Quick view",
     "add_to_cart": "Engadir ao carro",
     "added": "Engadido",
     "apply": "Aplicar",
@@ -159,6 +160,12 @@
     }
   },
   "content": {
+    "sale_ends_in": "Ends in",
+    "sale_days": "Days",
+    "sale_hours": "Hours",
+    "sale_minutes": "Minutes",
+    "sale_seconds": "Seconds",
+    "sale_percent_off": "{{ percent }}% off",
     "cancel": "Cancelar",
     "discount": "Desconto",
     "account_title": "Conta",

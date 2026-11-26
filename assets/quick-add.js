@@ -126,6 +126,11 @@ export class QuickAddComponent extends Component {
       return;
     }
 
+    // A product card with its own quantity selector passes that quantity on to the modal
+    const cardQuantity = /** @type {HTMLInputElement | null} */ (
+      this.querySelector('quantity-selector-component input[name="quantity"]')
+    )?.value;
+
     // Check if we have cached content for this URL
     let productGrid = this.#cachedContent.get(currentUrl);
 
@@ -142,7 +147,23 @@ export class QuickAddComponent extends Component {
     }
 
     this.#openQuickAddModal();
+    if (cardQuantity) this.#setModalQuantity(cardQuantity);
   };
+
+  /**
+   * Sets the quantity in the quick add modal.
+   * @param {string} quantity - The quantity chosen on the product card
+   */
+  #setModalQuantity(quantity) {
+    const selector = /** @type {import('@theme/component-quantity-selector').QuantitySelectorComponent | null} */ (
+      document.querySelector('#quick-add-modal-content quantity-selector-component')
+    );
+    const input = selector?.querySelector('input[name="quantity"]');
+    if (!selector || !(input instanceof HTMLInputElement)) return;
+
+    input.value = quantity;
+    selector.updateButtonStates?.();
+  }
 
   /**
    * Fetches the product grid that fills the quick add modal.

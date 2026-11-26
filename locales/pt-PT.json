@@ -97,6 +97,7 @@
     "link_to_collection": "Coleção: {{ title }}"
   },
   "actions": {
+    "quick_view": "Quick view",
     "add_to_cart": "Adicionar ao carrinho",
     "clear_all": "Limpar tudo",
     "remove": "Remover",
@@ -141,6 +142,12 @@
     "back_to_main_menu": "Voltar ao menu principal"
   },
   "content": {
+    "sale_ends_in": "Ends in",
+    "sale_days": "Days",
+    "sale_hours": "Hours",
+    "sale_minutes": "Minutes",
+    "sale_seconds": "Seconds",
+    "sale_percent_off": "{{ percent }}% off",
     "reviews": "avaliações",
     "language": "Idioma",
     "localization_region_and_language": "Região e idioma",

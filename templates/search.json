@@ -127,6 +127,20 @@
               },
               "blocks": {}
             },
+            "review_zpcard8": {
+              "type": "review",
+              "settings": {
+                "stars_style": "outline",
+                "show_number": true,
+                "compact_count": true,
+                "show_empty_stars": true,
+                "text_color": "{{ settings.color_palette.color4 }}",
+                "type_preset": "paragraph",
+                "width": "100%",
+                "alignment": "left"
+              },
+              "blocks": {}
+            },
             "price_fYkUgG": {
               "type": "price",
               "name": "t:names.product_price",
@@ -153,6 +167,7 @@
           "block_order": [
             "product_card_gallery_cFExAi",
             "product_title_j7qXTx",
+            "review_zpcard8",
             "price_fYkUgG"
           ]
         }

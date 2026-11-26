@@ -1,0 +1,112 @@
+{%- doc -%}
+  Renders a countdown to the end of a sale. Liquid prints the starting values and
+  assets/sale-carousel.js keeps them up to date.
+
+  @param {number} end_epoch - The end of the sale as a Unix timestamp in seconds
+  @param {boolean} hide_when_ended - Whether the whole section hides when the countdown reaches zero
+
+  @example
+  {% render 'sale-countdown', end_epoch: 1798761599, hide_when_ended: true %}
+{%- enddoc -%}
+
+{%- liquid
+  assign now_epoch = 'now' | date: '%s' | plus: 0
+  assign remaining = end_epoch | minus: now_epoch | at_least: 0
+  assign days = remaining | divided_by: 86400
+  assign hours = remaining | modulo: 86400 | divided_by: 3600
+  assign minutes = remaining | modulo: 3600 | divided_by: 60
+  assign seconds = remaining | modulo: 60
+-%}
+
+<sale-countdown
+  class="sale-countdown"
+  data-end="{{ end_epoch }}"
+  {% if hide_when_ended and request.design_mode == false %}
+    data-hide-section
+  {% endif %}
+>
+  <p class="sale-countdown__label">{{ 'content.sale_ends_in' | t }}</p>
+  <span class="visually-hidden">{{ end_epoch | date: format: 'date_time' }}</span>
+  <div
+    class="sale-countdown__units"
+    aria-hidden="true"
+  >
+    <span class="sale-countdown__unit">
+      <span class="sale-countdown__value" ref="days">{{ days | prepend: '00' | slice: -2, 2 }}</span>
+      <span class="sale-countdown__name">{{ 'content.sale_days' | t }}</span>
+    </span>
+    <span class="sale-countdown__unit">
+      <span class="sale-countdown__value" ref="hours">{{ hours | prepend: '00' | slice: -2, 2 }}</span>
+      <span class="sale-countdown__name">{{ 'content.sale_hours' | t }}</span>
+    </span>
+    <span class="sale-countdown__unit">
+      <span class="sale-countdown__value" ref="minutes">{{ minutes | prepend: '00' | slice: -2, 2 }}</span>
+      <span class="sale-countdown__name">{{ 'content.sale_minutes' | t }}</span>
+    </span>
+    <span class="sale-countdown__unit">
+      <span class="sale-countdown__value" ref="seconds">{{ seconds | prepend: '00' | slice: -2, 2 }}</span>
+      <span class="sale-countdown__name">{{ 'content.sale_seconds' | t }}</span>
+    </span>
+  </div>
+</sale-countdown>
+
+{% stylesheet %}
+  .sale-countdown {
+    display: block;
+  }
+
+  .sale-countdown[hidden] {
+    display: none;
+  }
+
+  .sale-countdown__label {
+    margin: 0 0 var(--margin-xs);
+    font-size: var(--font-size--xs);
+  }
+
+  .sale-countdown__units {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 6px;
+    max-width: 320px;
+  }
+
+  .sale-countdown__unit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-block: var(--padding-xs);
+    border: 1px solid color-mix(in srgb, currentcolor 25%, transparent);
+    border-radius: 10px;
+    background: color-mix(in srgb, currentcolor 8%, transparent);
+  }
+
+  .sale-countdown__value {
+    font-family: var(--font-heading--family);
+    font-size: var(--font-size--2xl);
+    font-variant-numeric: tabular-nums;
+    line-height: 1.2;
+  }
+
+  .sale-countdown__name {
+    max-width: 100%;
+    overflow: hidden;
+    font-size: 0.625rem;
+    text-overflow: ellipsis;
+  }
+
+  /* A panel as narrow as a product card */
+  @container (max-width: 220px) {
+    .sale-countdown__units {
+      gap: 3px;
+    }
+
+    .sale-countdown__value {
+      font-size: var(--font-size--lg);
+    }
+
+    .sale-countdown__name {
+      font-size: 0.5rem;
+    }
+  }
+{% endstylesheet %}

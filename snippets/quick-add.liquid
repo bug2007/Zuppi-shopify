@@ -4,12 +4,26 @@
   @param {object} product - The product object
   @param {string} section_id - The section ID
   @param {object} [block] - The block object
+  @param {string} [layout] - Pass 'row' for a quantity selector and icon button below the card details,
+    instead of the default button that floats over the product image.
 {%- enddoc -%}
 
 {% liquid
   assign product_form_id = 'QuickAdd-ProductForm-' | append: product.id | append: '-' | append: block.id
   assign add_to_cart_text = 'actions.add' | t
   assign choose_options_text = 'actions.choose' | t
+
+  assign is_row = false
+  assign component_class = 'quick-add custom-color-quick-add'
+  assign add_button_class = 'quick-add__button quick-add__button--add add-to-cart-button'
+  assign choose_button_class = 'button quick-add__button quick-add__button--choose add-to-cart-button'
+  if layout == 'row'
+    assign is_row = true
+    assign product_form_id = product_form_id | append: '-' | append: section_id
+    assign component_class = 'card-purchase'
+    assign add_button_class = 'card-purchase__button quick-add__button--add add-to-cart-button'
+    assign choose_button_class = 'button card-purchase__button quick-add__button--choose add-to-cart-button'
+  endif
   # Logic to determine which variant to use (matching swatch selection logic from product-card)
   assign variant = product.selected_or_first_available_variant
 
@@ -54,6 +68,19 @@
     assign render_add = false
     assign render_choose = true
   endif
+
+  if is_row
+    capture add_to_cart_text
+      echo '<span class="visually-hidden">'
+      echo 'actions.add_to_cart' | t
+      echo '</span>'
+    endcapture
+    capture choose_options_text
+      echo '<span class="visually-hidden">'
+      echo 'actions.choose' | t
+      echo '</span>'
+    endcapture
+  endif
 %}
 
 {% render 'fly-to-cart-styles' %}
@@ -78,7 +105,7 @@
   quick-add modal via quick-add-component/handleClick - so it lives outside the form.
 {% endcomment %}
 <quick-add-component
-  class="quick-add custom-color-quick-add"
+  class="{{ component_class }}"
   ref="quickAdd"
   data-product-title="{{ product.title }}"
   data-product-id="{{ product.id }}"
@@ -88,6 +115,32 @@
   data-uses-selling-plans="{{ uses_selling_plans }}"
   data-renders-both-buttons="{% if render_add and render_choose %}true{% endif %}"
 >
+  {% if is_row %}
+    <button
+      type="button"
+      class="card-purchase__view button-unstyled"
+      aria-label="{{ 'actions.quick_view' | t }}: {{ product.title | escape }}"
+      on:click="quick-add-component/handleClick"
+    >
+      <svg
+        aria-hidden="true"
+        focusable="false"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.6"
+      >
+        <path d="M2 12s3.600-6.500 10-6.500S22 12 22 12s-3.600 6.500-10 6.500S2 12 2 12Z" />
+        <circle cx="12" cy="12" r="2.800" />
+      </svg>
+    </button>
+  {% endif %}
+
+  {% comment %} A product that needs options has no add form, so its quantity is carried into the modal. {% endcomment %}
+  {% if is_row and initial_button == 'choose' and render_add == false %}
+    {% render 'quantity-selector', product: product, wrapper_class: 'card-purchase__quantity' %}
+  {% endif %}
+
   {% if render_add %}
     <product-form-component
       data-section-id="{{ section_id }}"
@@ -112,14 +165,18 @@
             disabled
           {% endif %}
         >
-        <input
-          type="hidden"
-          name="quantity"
-          value="{% if variant.quantity_rule.min %}{{ variant.quantity_rule.min }}{% else %}1{% endif %}"
-        >
+        {% if is_row %}
+          {% render 'quantity-selector', product: product, wrapper_class: 'card-purchase__quantity' %}
+        {% else %}
+          <input
+            type="hidden"
+            name="quantity"
+            value="{% if variant.quantity_rule.min %}{{ variant.quantity_rule.min }}{% else %}1{% endif %}"
+          >
+        {% endif %}
         {% render 'add-to-cart-button',
           add_to_cart_text: add_to_cart_text,
-          class: 'quick-add__button quick-add__button--add add-to-cart-button',
+          class: add_button_class,
           can_add_to_cart: can_add_to_cart,
           show_icon: true,
           product: product
@@ -130,7 +187,8 @@
 
   {% if render_choose %}
     <button
-      class="button quick-add__button quick-add__button--choose add-to-cart-button"
+      type="button"
+      class="{{ choose_button_class }}"
       name="add"
       on:click="quick-add-component/handleClick"
     >
@@ -153,6 +211,9 @@
   {% render 'variant-picker-styles' %}
 {% endif %}
 {% render 'quick-add-styles' %}
+{% if is_row %}
+  {% render 'quantity-selector-styles' %}
+{% endif %}
 {% render 'video-background-styles' %}
 {% render 'video-placeholder-styles' %}
 {% render 'deferred-media-product-model-styles' %}

@@ -6,6 +6,159 @@
 {%- enddoc -%}
 
 {% stylesheet %}
+  /* Quantity selector and cart button below the product card details */
+  .card-purchase {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--gap-xs);
+    align-self: stretch;
+    margin-block-start: auto;
+    padding-block-start: var(--padding-xs);
+  }
+
+  /* Sits above the card-wide product link so the controls can be clicked */
+  .card-purchase :is(.card-purchase__quantity, .card-purchase__button),
+  .card-purchase__view {
+    position: relative;
+    z-index: var(--layer-raised);
+  }
+
+  .card-purchase__form,
+  .card-purchase .quick-add__product-form-component {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .card-purchase .quick-add__product-form-component form {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--gap-xs);
+  }
+
+  .card-purchase .quantity-selector {
+    --quantity-selector-width: 108px;
+
+    flex: 0 0 auto;
+    height: 40px;
+    border-radius: 50px;
+  }
+
+  .card-purchase .quantity-selector :is(.quantity-minus, .quantity-plus) {
+    width: 34px;
+    height: 38px;
+    border-radius: 50px;
+  }
+
+  .card-purchase .quantity-selector input[type='number'] {
+    width: 36px;
+  }
+
+  .card-purchase .price-per-item {
+    display: none;
+  }
+
+  .card-purchase .button.card-purchase__button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 0 0 auto;
+    width: 42px;
+    height: 42px;
+    min-height: 0;
+    padding: 0;
+    border-radius: 50%;
+  }
+
+  .card-purchase .card-purchase__button .add-to-cart-icon {
+    display: flex;
+    width: var(--icon-size-md);
+    height: var(--icon-size-md);
+    margin: 0;
+  }
+
+  /* Both buttons can be in the card when a swatch choice switches between them */
+  .card-purchase[data-quick-add-button='choose'] add-to-cart-component {
+    display: none;
+  }
+
+  .card-purchase[data-quick-add-button='add'] .button.quick-add__button--choose {
+    display: none;
+  }
+
+  /* Narrow cards, such as two columns on phones */
+  @media screen and (max-width: 749px) {
+    .card-purchase .quantity-selector {
+      --quantity-selector-width: 84px;
+
+      height: 34px;
+    }
+
+    .card-purchase .quantity-selector :is(.quantity-minus, .quantity-plus) {
+      width: 28px;
+      height: 32px;
+    }
+
+    .card-purchase .quantity-selector input[type='number'] {
+      width: 26px;
+    }
+
+    .card-purchase .button.card-purchase__button {
+      width: 34px;
+      height: 34px;
+    }
+  }
+
+  /* Quick view button over the product image */
+  .card-purchase__view {
+    position: absolute;
+    inset-block-start: calc(var(--padding-xs) + 8px);
+    inset-inline-end: calc(var(--padding-xs) + 8px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border: 1px solid var(--color-input-border);
+    border-radius: 50%;
+    background: var(--color-background);
+    color: var(--color-foreground);
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity var(--animation-speed) var(--animation-easing);
+  }
+
+  .card-purchase__view svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .card-purchase__view:hover {
+    background: var(--color-primary-button-background);
+    color: var(--color-primary-button-text);
+  }
+
+  .product-card:is(:hover, :focus-within) .card-purchase__view {
+    opacity: 1;
+  }
+
+  /* Keep clear of a sale or sold out badge in the same corner */
+  .product-card__content:has(.product-badges--top-right) .card-purchase__view {
+    inset-block-start: calc(var(--padding-xs) + 52px);
+  }
+
+  @media (hover: none) {
+    .card-purchase__view {
+      display: none;
+    }
+  }
+
+  [product-grid-view='zoom-out'] .card-purchase {
+    display: none;
+  }
+
   /* Quick Add */
   .quick-add {
     --quick-add-offset: var(--padding-sm);

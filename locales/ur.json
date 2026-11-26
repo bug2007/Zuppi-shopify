@@ -77,6 +77,7 @@
   },
   "actions": {
     "add": "شامل کریں",
+    "quick_view": "Quick view",
     "add_to_cart": "کارٹ میں شامل کریں",
     "added": "شامل کر دیا گیا",
     "apply": "لاگو کریں",
@@ -159,6 +160,12 @@
     }
   },
   "content": {
+    "sale_ends_in": "Ends in",
+    "sale_days": "Days",
+    "sale_hours": "Hours",
+    "sale_minutes": "Minutes",
+    "sale_seconds": "Seconds",
+    "sale_percent_off": "{{ percent }}% off",
     "cancel": "منسوخ کریں",
     "discount": "ڈسکاؤنٹ",
     "account_title": "اکاؤنٹ",

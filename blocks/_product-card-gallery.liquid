@@ -4,7 +4,20 @@
 
 {% capture children %}
   {% unless product == blank %}
-    {%- if product.available == false or product.compare_at_price > product.price -%}
+    {% assign ribbon = '' %}
+    {% if section.settings.show_sale_ribbon and section.settings.layout_type == 'carousel' %}
+      {% assign ribbon_countdown = '' %}
+      {% if section.settings.show_countdown %}
+        {% assign ribbon_countdown = section.settings.countdown_end %}
+      {% endif %}
+      {% capture ribbon %}
+        {%- render 'sale-ribbon', product: product, text: section.settings.sale_ribbon_text, countdown_end: ribbon_countdown -%}
+      {% endcapture %}
+      {% assign ribbon = ribbon | strip %}
+      {{ ribbon }}
+    {% endif %}
+
+    {%- if product.available == false or product.compare_at_price > product.price and ribbon == blank -%}
       <div
         class="product-badges product-badges--{{ settings.badge_position }}"
         style="

@@ -96,6 +96,7 @@
     "link_to_collection": "Bộ sưu tập: {{ title }}"
   },
   "actions": {
+    "quick_view": "Quick view",
     "add_to_cart": "Thêm vào giỏ hàng",
     "clear_all": "Xóa tất cả",
     "remove": "Xóa",
@@ -139,6 +140,12 @@
     "back_to_main_menu": "Quay lại menu chính"
   },
   "content": {
+    "sale_ends_in": "Ends in",
+    "sale_days": "Days",
+    "sale_hours": "Hours",
+    "sale_minutes": "Minutes",
+    "sale_seconds": "Seconds",
+    "sale_percent_off": "{{ percent }}% off",
     "reviews": "đánh giá",
     "language": "Ngôn ngữ",
     "localization_region_and_language": "Khu vực và ngôn ngữ",

@@ -98,6 +98,7 @@
     "link_to_collection": "Коллекция: {{ title }}"
   },
   "actions": {
+    "quick_view": "Quick view",
     "add_to_cart": "Добавить в корзину",
     "clear_all": "Очистить всё",
     "remove": "Удалить",
@@ -143,6 +144,12 @@
     "back_to_main_menu": "Назад в главное меню"
   },
   "content": {
+    "sale_ends_in": "Ends in",
+    "sale_days": "Days",
+    "sale_hours": "Hours",
+    "sale_minutes": "Minutes",
+    "sale_seconds": "Seconds",
+    "sale_percent_off": "{{ percent }}% off",
     "reviews": "отз.",
     "no_results_found": "Результатов не найдено",
     "language": "Язык",

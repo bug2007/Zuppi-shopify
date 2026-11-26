@@ -96,6 +96,7 @@
     "link_to_collection": "Koleksiyon: {{ title }}"
   },
   "actions": {
+    "quick_view": "Quick view",
     "add_to_cart": "Sepete ekle",
     "clear_all": "Tümünü temizle",
     "remove": "Kaldır",
@@ -139,6 +140,12 @@
     "zoom_media": "Medyayı yakınlaştır: {{ index }}"
   },
   "content": {
+    "sale_ends_in": "Ends in",
+    "sale_days": "Days",
+    "sale_hours": "Hours",
+    "sale_minutes": "Minutes",
+    "sale_seconds": "Seconds",
+    "sale_percent_off": "{{ percent }}% off",
     "reviews": "değerlendirme",
     "language": "Dil",
     "localization_region_and_language": "Bölge ve dil",
