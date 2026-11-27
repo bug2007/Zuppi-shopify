@@ -35,6 +35,16 @@
   capture effective_primary_button_hover_background
     render 'util-palette-hover-shift', color: settings.palette_primary_button_background
   endcapture
+
+  # A mid-bright button with darker text, such as orange with navy, darkens less so the text stays readable
+  assign primary_background_brightness = settings.palette_primary_button_background | color_brightness
+  assign primary_text_brightness = settings.palette_primary_button_text | color_brightness
+  if settings.palette_primary_button_background.alpha == 1 and primary_background_brightness > 128 and primary_background_brightness <= 190 and primary_text_brightness < primary_background_brightness
+    capture effective_primary_button_hover_background
+      echo settings.palette_primary_button_background | color_darken: 5
+    endcapture
+  endif
+
   if settings.palette_primary_button_background.alpha == 1
     assign primary_hover_background_has_alpha = false
   else

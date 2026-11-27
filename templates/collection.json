@@ -9,14 +9,43 @@
  */
 {
   "sections": {
-    "zuppi_banner": {
+    "zuppi_collection_banner_xmi4Ab": {
       "type": "zuppi-collection-banner",
+      "blocks": {
+        "banner_dogs": {
+          "type": "banner",
+          "settings": {
+            "collection": "dogs",
+            "description": "<p>Bowls, cans and trays for every kind of eater.</p>",
+            "background_color": "",
+            "text_color": ""
+          }
+        }
+      },
+      "block_order": [
+        "banner_dogs"
+      ],
+      "name": "t:names.collection_banner",
       "settings": {
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "background_color": "{{ settings.color_palette.color1 }}",
+        "text_color": "{{ settings.color_palette.background }}",
+        "banner_height": 340,
+        "show_subcategories": true,
         "menu": "main-menu",
-        "background_color": "#4f46e5",
-        "text_color": "#fff8f0",
         "show_description": true,
-        "dogs_description": "<p>Bowls, cans and trays for every kind of eater.</p>"
+        "description_width": 47,
+        "type_preset": "rte",
+        "font": "var(--font-body--family)",
+        "font_size": "1rem",
+        "line_height": "normal",
+        "letter_spacing": "normal",
+        "case": "none",
+        "wrap": "pretty",
+        "description_color": ""
       }
     },
     "main": {
@@ -28,7 +57,7 @@
           "settings": {
             "enable_filtering": true,
             "filter_style": "horizontal",
-            "filter_width": "centered",
+            "filter_width": "full-width",
             "text_label_case": "default",
             "show_swatch_label": false,
             "show_filter_label": false,
@@ -38,8 +67,8 @@
             "text_color": "",
             "padding-block-start": 8,
             "padding-block-end": 8,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0,
+            "padding-inline-start": 50,
+            "padding-inline-end": 50,
             "facets_margin_bottom": 8,
             "facets_margin_right": 20
           },
@@ -50,16 +79,21 @@
           "static": true,
           "settings": {
             "product_card_gap": 4,
+            "show_quantity_add": true,
             "background_color": "",
             "border": "none",
             "border_width": 1,
             "border_opacity": 100,
             "border_color": "",
             "border_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
+            "hover_border": "solid",
+            "hover_border_width": 1,
+            "hover_border_opacity": 100,
+            "hover_border_color": "",
+            "padding-block-start": 10,
+            "padding-block-end": 20,
+            "padding-inline-start": 10,
+            "padding-inline-end": 10
           },
           "blocks": {
             "card-gallery": {
@@ -154,12 +188,12 @@
         "mobile_product_card_size": "small",
         "enable_infinite_scroll": false,
         "products_per_page": 20,
-        "product_grid_width": "centered",
+        "product_grid_width": "full-width",
         "full_width_on_mobile": false,
         "columns_gap_horizontal": 16,
         "columns_gap_vertical": 24,
-        "padding-inline-start": 0,
-        "padding-inline-end": 0,
+        "padding-inline-start": 44,
+        "padding-inline-end": 44,
         "background_color": "{{ settings.color_palette.background }}",
         "padding-block-start": 0,
         "padding-block-end": 32
@@ -167,7 +201,7 @@
     }
   },
   "order": [
-    "zuppi_banner",
+    "zuppi_collection_banner_xmi4Ab",
     "main"
   ]
 }

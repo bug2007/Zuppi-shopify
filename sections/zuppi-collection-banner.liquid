@@ -1,9 +1,17 @@
 {% comment %}
-  Section contract. Presents the current collection and its related destinations from the selected menu.
+  Section contract. A banner for collection pages with a breadcrumb trail, the collection title,
+  a description and buttons for the sub-collections nested under it in a menu.
+  Each "Collection" block gives one collection its own background image, colors and description.
+  A sub-collection without a block of its own uses the block of its parent collection.
+  @example
+  <!-- Add "Collection banner" to the collection template, then add one Collection block per collection -->
 {% endcomment %}
 
 {% liquid
-  assign collection_menu = section.settings.menu | default: linklists['main-menu']
+  assign s = section.settings
+
+  # Find the current collection in the menu, either at the top level or one level down
+  assign collection_menu = s.menu | default: linklists['main-menu']
   assign parent_link = nil
   assign category_link = nil
   for item in collection_menu.links
@@ -14,7 +22,7 @@
     for child in item.links
       if child.type == 'collection_link' and child.object.handle == collection.handle
         assign parent_link = item
-        assign category_link = item
+        assign category_link = child
         break
       endif
     endfor
@@ -22,9 +30,65 @@
       break
     endif
   endfor
+
+  assign parent_handle = ''
+  if parent_link and parent_link.type == 'collection_link'
+    assign parent_handle = parent_link.object.handle
+  endif
+
+  assign own_entry = nil
+  assign parent_entry = nil
+  for block in section.blocks
+    assign block_handle = block.settings.collection.handle
+    if block_handle != blank
+      if block_handle == collection.handle
+        assign own_entry = block
+      elsif block_handle == parent_handle
+        assign parent_entry = block
+      endif
+    endif
+  endfor
+  assign entry = own_entry | default: parent_entry
+
+  assign banner_image = entry.settings.background_image | default: s.background_image
+  assign banner_color = entry.settings.background_color | default: s.background_color
+  assign banner_text = entry.settings.text_color | default: s.text_color
+
+  # A description typed for this exact collection wins, then the collection's own description
+  assign description = own_entry.settings.description | default: collection.description
 %}
 
-<div class="zuppi-collection-banner" style="--zuppi-banner-color: {{ section.settings.background_color }}; --zuppi-banner-text: {{ section.settings.text_color }};">
+<div
+  class="zuppi-collection-banner"
+  style="
+    --zuppi-banner-color: {{ banner_color }};
+    --zuppi-banner-text: {{ banner_text }};
+    --zuppi-banner-height: {{ s.banner_height }}px;
+  "
+>
+  {% if banner_image %}
+    {%- liquid
+      assign focal_point = banner_image.presentation.focal_point | default: '50% 50%'
+    -%}
+    {{
+      banner_image
+      | image_url: width: 3840
+      | image_tag:
+        class: 'zuppi-collection-banner__image',
+        widths: '750, 1100, 1500, 2000, 2600, 3200, 3840',
+        sizes: '100vw',
+        alt: '',
+        loading: 'eager',
+        fetchpriority: 'high',
+        style: 'object-position: [point];'
+      | replace: '[point]', focal_point
+    }}
+  {% endif %}
+
+  {% if s.toggle_overlay %}
+    {% render 'overlay', settings: s, layer: '-1' %}
+  {% endif %}
+
   <div class="zuppi-collection-banner__content">
     <div class="zuppi-collection-banner__trail">
       <a href="{{ routes.root_url }}">{{ 'accessibility.link_to_home' | t }}</a>
@@ -35,24 +99,45 @@
       {% endif %}
       <span aria-current="page">{{ collection.title | escape }}</span>
     </div>
+
     <h1>{{ collection.title | escape }}</h1>
-    {% if section.settings.show_description and collection.description != blank %}
-      <div class="zuppi-collection-banner__description rte">{{ collection.description }}</div>
-    {% elsif section.settings.show_description and collection.handle == 'dogs' and section.settings.dogs_description != blank %}
-      <div class="zuppi-collection-banner__description rte">{{ section.settings.dogs_description }}</div>
+
+    {% if s.show_description and description != blank %}
+      <div
+        class="
+          zuppi-collection-banner__description text-block {{ s.type_preset }}
+          {% if s.type_preset == 'rte' or s.type_preset == 'paragraph' %} rte{% endif %}
+          {% if s.type_preset == 'custom' %} custom-typography{% if s.font_size != blank %} custom-font-size{% endif %}{% endif %}
+        "
+        style="
+          {% render 'typography-style', settings: s %}
+          {% if s.type_preset == 'custom' %}font-family: {{ s.font }};{% endif %}
+          {% if s.description_color != blank %}color: {{ s.description_color }};{% endif %}
+          --zuppi-description-width: {{ s.description_width }}ch;
+        "
+      >
+        {{ description }}
+      </div>
     {% endif %}
-    {% if category_link.links.size > 0 %}
+
+    {% if s.show_subcategories and category_link.links.size > 0 %}
       <ul class="zuppi-collection-banner__links list-unstyled">
         {% for link in category_link.links %}
-          <li><a href="{{ link.url }}"{% if link.current %} aria-current="page"{% endif %}>{{ link.title | escape }}</a></li>
+          <li>
+            <a
+              href="{{ link.url }}"
+              {% if link.current %}
+                aria-current="page"
+              {% endif %}
+            >{{ link.title | escape }}</a>
+          </li>
         {% endfor %}
       </ul>
     {% endif %}
   </div>
-  <div class="zuppi-collection-banner__mark" aria-hidden="true">
-    <span></span><span></span><span></span><span></span><span></span>
-  </div>
 </div>
+
+{% render 'text-block-styles' %}
 
 {% stylesheet %}
   .zuppi-collection-banner {
@@ -60,7 +145,7 @@
     isolation: isolate;
     display: flex;
     align-items: center;
-    min-block-size: clamp(17rem, 24vw, 26rem);
+    min-block-size: var(--zuppi-banner-height);
     margin-bottom: 1rem;
     inline-size: 100%;
     overflow: hidden;
@@ -68,89 +153,241 @@
     background: var(--zuppi-banner-color);
   }
 
-  .zuppi-collection-banner::after {
+  .zuppi-collection-banner__image {
     position: absolute;
-    z-index: -1;
-    inset-block-end: -42%;
-    inset-inline-end: -8%;
-    inline-size: clamp(11rem, 24vw, 24rem);
-    aspect-ratio: 1;
-    border-radius: 50%;
-    background: #1e1b4b38;
-    content: '';
-    pointer-events: none;
+    inset: 0;
+    z-index: -2;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 
-  .zuppi-collection-banner__content { min-inline-size: 0; padding: clamp(1.35rem, 4vw, 4rem); }
-  .zuppi-collection-banner__trail { display: flex; align-items: center; gap: .4rem; font-size: .82rem; margin-block-end: .9rem; }
-  .zuppi-collection-banner__trail a { color: inherit; text-decoration: underline; text-underline-offset: .18em; }
+  .zuppi-collection-banner__content {
+    min-inline-size: 0;
+    padding: clamp(1.35rem, 4vw, 4rem);
+  }
+
+  .zuppi-collection-banner__trail {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.82rem;
+    margin-block-end: 0.9rem;
+  }
+
+  .zuppi-collection-banner__trail a {
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 0.18em;
+  }
+
   .zuppi-collection-banner h1 {
     color: inherit;
     margin: 0;
     font-size: clamp(2.75rem, 8vw, 7rem);
     font-weight: 800;
-    letter-spacing: -.06em;
+    letter-spacing: -0.06em;
     line-height: 1;
     overflow-wrap: anywhere;
   }
 
-  .zuppi-collection-banner__description { margin-block: .8rem 0; max-inline-size: 47ch; }
-  .zuppi-collection-banner__description :is(p, a) { color: inherit; }
-  .zuppi-collection-banner__links { display: flex; flex-wrap: wrap; gap: .5rem; margin: 1.05rem 0 0; padding: 0; }
+  .zuppi-collection-banner .zuppi-collection-banner__description {
+    margin-block: 0.8rem 0;
+    max-inline-size: var(--zuppi-description-width);
+  }
+
+  .zuppi-collection-banner__description :is(p, a, h1, h2, h3, h4, h5, h6, li) {
+    color: inherit;
+  }
+
+  .zuppi-collection-banner__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 1.05rem 0 0;
+    padding: 0;
+  }
+
   .zuppi-collection-banner__links a {
     display: inline-flex;
     align-items: center;
     min-block-size: 2.75rem;
-    padding: .45rem .95rem;
-    border: 1px solid #fff8f0;
+    padding: 0.45rem 0.95rem;
+    border: 1px solid #ffffff;
     border-radius: 50rem;
-    background: #fff8f0;
-    color: #1e1b4b;
-    font-size: .875rem;
+    background: #ffffff;
+    color: #17324d;
+    font-size: 0.875rem;
     font-weight: 650;
     text-decoration: none;
   }
 
-  .zuppi-collection-banner__links a:is(:hover, :focus-visible, [aria-current='page']) { background: #e7dbff; }
-  .zuppi-collection-banner__mark {
-    position: relative;
-    flex: 0 0 auto;
-    inline-size: clamp(9rem, 18vw, 16rem);
-    aspect-ratio: 1;
-    margin-inline: auto clamp(1.3rem, 5vw, 5rem);
-    border-radius: 50%;
-    background: #ffffff30;
-  }
-
-  .zuppi-collection-banner__mark span { position: absolute; border-radius: 50%; background: #fff8f0; }
-  .zuppi-collection-banner__mark span:nth-child(1) { inset: 32% auto auto 18%; inline-size: 14%; block-size: 21%; transform: rotate(-25deg); }
-  .zuppi-collection-banner__mark span:nth-child(2) { inset: 15% auto auto 35%; inline-size: 15%; block-size: 24%; transform: rotate(-8deg); }
-  .zuppi-collection-banner__mark span:nth-child(3) { inset: 15% 30% auto auto; inline-size: 15%; block-size: 24%; transform: rotate(10deg); }
-  .zuppi-collection-banner__mark span:nth-child(4) { inset: 32% 14% auto auto; inline-size: 14%; block-size: 21%; transform: rotate(24deg); }
-  .zuppi-collection-banner__mark span:nth-child(5) {
-    inset: auto 24% 17%;
-    block-size: 33%;
-    border-radius: 50% 50% 40% 40% / 75% 75% 25% 25%;
-    background: #f0502d;
+  .zuppi-collection-banner__links a:is(:hover, :focus-visible, [aria-current='page']) {
+    background: #e3f2fc;
   }
 
   @media (max-width: 699px) {
-    .zuppi-collection-banner { align-items: flex-start; }
-    .zuppi-collection-banner__mark { display: none; }
+    .zuppi-collection-banner {
+      align-items: flex-start;
+    }
   }
 {% endstylesheet %}
 
 {% schema %}
 {
-  "name": "t:names.collection_title",
+  "name": "t:names.collection_banner",
   "enabled_on": { "templates": ["collection"] },
   "settings": [
-    { "type": "link_list", "id": "menu", "label": "t:settings.menu", "default": "main-menu" },
-    { "type": "color", "id": "background_color", "label": "t:settings.background_color", "default": "#4F46E5" },
-    { "type": "color", "id": "text_color", "label": "t:settings.text_color", "default": "#FFF8F0" },
-    { "type": "checkbox", "id": "show_description", "label": "t:names.description", "default": true },
-    { "type": "richtext", "id": "dogs_description", "label": "t:settings.text" }
+    { "type": "header", "content": "t:content.banner_background" },
+    { "type": "image_picker", "id": "background_image", "label": "t:settings.banner_default_image", "info": "t:info.banner_default_image" },
+    { "type": "checkbox", "id": "toggle_overlay", "label": "t:settings.media_overlay", "default": false },
+    { "type": "color", "id": "overlay_color", "label": "t:settings.overlay_color", "alpha": true, "default": "#00000026", "visible_if": "{{ section.settings.toggle_overlay }}" },
+    {
+      "type": "select",
+      "id": "overlay_style",
+      "label": "t:settings.overlay_style",
+      "options": [
+        { "value": "solid", "label": "t:options.solid" },
+        { "value": "gradient", "label": "t:options.gradient" }
+      ],
+      "default": "solid",
+      "visible_if": "{{ section.settings.toggle_overlay }}"
+    },
+    {
+      "type": "select",
+      "id": "gradient_direction",
+      "label": "t:settings.gradient_direction",
+      "options": [
+        { "value": "to top", "label": "t:options.up" },
+        { "value": "to bottom", "label": "t:options.down" }
+      ],
+      "default": "to top",
+      "visible_if": "{{ section.settings.toggle_overlay and section.settings.overlay_style == 'gradient' }}"
+    },
+    { "type": "color", "id": "background_color", "label": "t:settings.background_color", "default": "{{ settings.color_palette.color1 }}" },
+    { "type": "color", "id": "text_color", "label": "t:settings.text_color", "default": "{{ settings.color_palette.background }}" },
+    { "type": "range", "id": "banner_height", "label": "t:settings.banner_height", "min": 200, "max": 600, "step": 20, "unit": "px", "default": 340 },
+
+    { "type": "header", "content": "t:content.banner_subcategories" },
+    { "type": "checkbox", "id": "show_subcategories", "label": "t:settings.show_subcategories", "default": true },
+    { "type": "link_list", "id": "menu", "label": "t:settings.banner_menu", "info": "t:info.banner_menu", "default": "main-menu" },
+
+    { "type": "header", "content": "t:content.banner_description" },
+    { "type": "checkbox", "id": "show_description", "label": "t:settings.show_banner_description", "default": true },
+    { "type": "range", "id": "description_width", "label": "t:settings.banner_description_width", "min": 20, "max": 90, "step": 1, "unit": "ch", "default": 47, "visible_if": "{{ section.settings.show_description }}" },
+    {
+      "type": "select",
+      "id": "type_preset",
+      "label": "t:settings.preset",
+      "options": [
+        { "value": "rte", "label": "t:options.default" },
+        { "value": "paragraph", "label": "t:options.paragraph" },
+        { "value": "h1", "label": "t:options.h1" },
+        { "value": "h2", "label": "t:options.h2" },
+        { "value": "h3", "label": "t:options.h3" },
+        { "value": "h4", "label": "t:options.h4" },
+        { "value": "h5", "label": "t:options.h5" },
+        { "value": "h6", "label": "t:options.h6" },
+        { "value": "custom", "label": "t:options.custom" }
+      ],
+      "default": "rte",
+      "info": "t:info.edit_presets_in_theme_settings",
+      "visible_if": "{{ section.settings.show_description }}"
+    },
+    {
+      "type": "select",
+      "id": "font",
+      "label": "t:settings.font",
+      "options": [
+        { "value": "var(--font-body--family)", "label": "t:options.body" },
+        { "value": "var(--font-subheading--family)", "label": "t:options.subheading" },
+        { "value": "var(--font-heading--family)", "label": "t:options.heading" },
+        { "value": "var(--font-accent--family)", "label": "t:options.accent" }
+      ],
+      "default": "var(--font-body--family)",
+      "visible_if": "{{ section.settings.show_description and section.settings.type_preset == 'custom' }}"
+    },
+    {
+      "type": "select",
+      "id": "font_size",
+      "label": "t:settings.size",
+      "options": [
+        { "value": "0.75rem", "label": "12px" },
+        { "value": "0.875rem", "label": "14px" },
+        { "value": "1rem", "label": "16px" },
+        { "value": "1.125rem", "label": "18px" },
+        { "value": "1.25rem", "label": "20px" },
+        { "value": "1.5rem", "label": "24px" },
+        { "value": "2rem", "label": "32px" },
+        { "value": "2.5rem", "label": "40px" },
+        { "value": "3rem", "label": "48px" }
+      ],
+      "default": "1rem",
+      "visible_if": "{{ section.settings.show_description and section.settings.type_preset == 'custom' }}"
+    },
+    {
+      "type": "select",
+      "id": "line_height",
+      "label": "t:settings.line_height",
+      "options": [
+        { "value": "tight", "label": "t:options.tight" },
+        { "value": "normal", "label": "t:options.normal" },
+        { "value": "loose", "label": "t:options.loose" }
+      ],
+      "default": "normal",
+      "visible_if": "{{ section.settings.show_description and section.settings.type_preset == 'custom' }}"
+    },
+    {
+      "type": "select",
+      "id": "letter_spacing",
+      "label": "t:settings.letter_spacing",
+      "options": [
+        { "value": "tight", "label": "t:options.tight" },
+        { "value": "normal", "label": "t:options.normal" },
+        { "value": "loose", "label": "t:options.loose" }
+      ],
+      "default": "normal",
+      "visible_if": "{{ section.settings.show_description and section.settings.type_preset == 'custom' }}"
+    },
+    {
+      "type": "select",
+      "id": "case",
+      "label": "t:settings.case",
+      "options": [
+        { "value": "none", "label": "t:options.default" },
+        { "value": "uppercase", "label": "t:options.uppercase" }
+      ],
+      "default": "none",
+      "visible_if": "{{ section.settings.show_description and section.settings.type_preset == 'custom' }}"
+    },
+    {
+      "type": "select",
+      "id": "wrap",
+      "label": "t:settings.wrap",
+      "options": [
+        { "value": "pretty", "label": "t:options.pretty" },
+        { "value": "balance", "label": "t:options.balance" },
+        { "value": "nowrap", "label": "t:options.none" }
+      ],
+      "default": "pretty",
+      "visible_if": "{{ section.settings.show_description and section.settings.type_preset == 'custom' }}"
+    },
+    { "type": "color", "id": "description_color", "label": "t:settings.banner_description_color", "placeholder": "t:settings.default", "visible_if": "{{ section.settings.show_description }}" }
   ],
-  "presets": [{ "name": "t:names.collection_title" }]
+  "blocks": [
+    {
+      "type": "banner",
+      "name": "t:names.banner_collection",
+      "settings": [
+        { "type": "collection", "id": "collection", "label": "t:settings.collection", "info": "t:info.banner_collection" },
+        { "type": "image_picker", "id": "background_image", "label": "t:settings.banner_image" },
+        { "type": "richtext", "id": "description", "label": "t:settings.banner_description_text", "info": "t:info.banner_description_text" },
+        { "type": "color", "id": "background_color", "label": "t:settings.background_color", "placeholder": "t:settings.default" },
+        { "type": "color", "id": "text_color", "label": "t:settings.text_color", "placeholder": "t:settings.default" }
+      ]
+    }
+  ],
+  "max_blocks": 50,
+  "presets": [{ "name": "t:names.collection_banner" }]
 }
 {% endschema %}

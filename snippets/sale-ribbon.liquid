@@ -41,6 +41,7 @@
 {%- if label != blank and product.available -%}
   <span
     class="sale-ribbon"
+    style="background: {{ settings.color_palette.color6 }}; color: {{ settings.color_palette.foreground }};"
     {% if timed %}
       data-sale-ribbon-timed
     {% endif %}

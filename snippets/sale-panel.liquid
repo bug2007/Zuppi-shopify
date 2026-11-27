@@ -23,7 +23,10 @@
   endif
 -%}
 
-<div class="sale-panel">
+<div
+  class="sale-panel"
+  style="background: {{ settings.color_palette.color1 }}; color: {{ settings.color_palette.background }};"
+>
   <a
     class="sale-panel__media"
     {% if collection != blank %}

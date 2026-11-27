@@ -30,6 +30,9 @@
     "text": "టెక్స్ట్"
   },
   "content": {
+    "banner_background": "Background",
+    "banner_subcategories": "Sub-collection buttons",
+    "banner_description": "Description",
     "brand_tiles": "Brand tiles",
     "motion": "Motion",
     "sale_carousel": "Sale carousel",
@@ -218,6 +221,10 @@
     "work_quickly_to_ship": "<p>వీలైనంత త్వరగా మీ ఆర్డర్‌ను షిప్ చేయడానికి మేము వేగంగా పని చేస్తాము. మీ ఆర్డర్ షిప్ చేయబడిన తర్వాత, మీరు తదుపరి సమాచారంతో కూడిన ఇమెయిల్‌ను అందుకుంటారు. మీ లొకేషన్‌ను బట్టి డెలివరీ సమయాలు మారుతూ ఉంటాయి.</p>"
   },
   "info": {
+    "banner_default_image": "Used by collections that have no image of their own.",
+    "banner_menu": "The buttons are the items nested under the current collection in this menu. To change them, edit the menu in your store admin.",
+    "banner_collection": "The page this entry applies to. Its sub-collections use it too, unless they have their own entry.",
+    "banner_description_text": "Leave empty to use the description of the collection.",
     "loop_duration": "Time for one full loop. A lower number scrolls faster.",
     "countdown_end": "Year-month-day hour:minute, for example 2026-12-31 23:59, in your store time zone.",
     "sale_ribbon_text": "Products with a compare-at price show their discount percentage instead.",
@@ -252,6 +259,8 @@
     "show_physical_stores_help": "పికప్‌ను అందించనప్పటికీ, ఉత్పత్తి స్టాక్‌లో ఉన్న భౌతిక స్టోర్‌ఫ్రంట్‌గా మార్క్ చేయబడిన లొకేషన్‌లను కూడా జాబితా చేయండి."
   },
   "names": {
+    "collection_banner": "Collection banner",
+    "banner_collection": "Collection",
     "brand_carousel": "Brand carousel",
     "brand": "Brand",
     "column": "నిలువు వరుస",
@@ -701,6 +710,15 @@
     "below_media": "మీడియా దిగువన"
   },
   "settings": {
+    "banner_default_image": "Default background image",
+    "banner_height": "Banner height",
+    "show_subcategories": "Show sub-collection buttons",
+    "banner_menu": "Menu that holds the sub-collections",
+    "show_banner_description": "Show description",
+    "banner_description_width": "Maximum line length",
+    "banner_description_color": "Description color",
+    "banner_image": "Background image",
+    "banner_description_text": "Description",
     "social_instagram": "Instagram",
     "social_facebook": "Facebook",
     "social_tiktok": "TikTok",
